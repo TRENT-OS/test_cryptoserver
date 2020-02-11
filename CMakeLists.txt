@@ -71,6 +71,20 @@ DeclareCAmkESComponent(test_CryptoServer_access_3
         seos_crypto_with_rpc_client
 )
 
+DeclareCAmkESComponent(test_CryptoServer
+    INCLUDES
+        components/CryptoServer/src
+    SOURCES
+        components/Tests/src/test_CryptoServer.c
+    C_FLAGS
+        -Wall -Werror
+        -DCLIENT_ID=4
+    LIBS
+        seos_core_api
+        seos_libs
+        seos_crypto_with_rpc_client
+)
+
 DeclareCAmkESComponent(UartDrv
     SOURCES
         components/Uart/src/UartDrv.c

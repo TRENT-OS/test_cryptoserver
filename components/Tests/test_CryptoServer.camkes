@@ -1,0 +1,17 @@
+/**
+ * Copyright (C) 2019, Hensoldt Cyber GmbH
+ */
+
+import <seos_if_cryptoServer.camkes>;
+import <seos_if_seosCryptoRpcServer.camkes>;
+
+component test_CryptoServer {
+    control;
+
+    // Crypto API provided by Crypto API RPC instance on CryptoServer
+    dataport    Buf                         SeosCryptoDataport;
+    uses        seos_if_seosCryptoRpcServer SeosCryptoRpcServer;
+
+    // Additional interface provided by CryptoServer itself
+    uses        seos_if_cryptoServer        CryptoServer;
+}
