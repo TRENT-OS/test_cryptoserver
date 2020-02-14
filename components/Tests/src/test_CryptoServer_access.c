@@ -57,6 +57,8 @@ test_CryptoServer_access(
     char name[16];
     size_t id, my_id = CLIENT_ID;
 
+    TEST_START(my_id);
+
     snprintf(name, sizeof(name), "KEY_%i", my_id);
 
     // Import key into RPC server and store it, then free it
@@ -92,7 +94,7 @@ test_CryptoServer_access(
         }
     }
 
-    TEST_OK(my_id);
+    TEST_FINISH();
 }
 
 int run()

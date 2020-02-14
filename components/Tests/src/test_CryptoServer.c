@@ -35,6 +35,8 @@ test_CryptoServer_storeKey_pos(
     char keyName[] = "storeOk";
     SeosCryptoApi_Key key;
 
+    TEST_START();
+
     // Import key into RPC server and store it, then free it
     TEST_SUCCESS(SeosCryptoApi_Key_import(api, &key, &aesData));
     TEST_SUCCESS(CryptoServer_storeKey(keyName, key));
@@ -42,7 +44,7 @@ test_CryptoServer_storeKey_pos(
 
     *bytesWritten += sizeof(aesData);
 
-    TEST_OK();
+    TEST_FINISH();
 }
 
 static void
@@ -51,6 +53,8 @@ test_CryptoServer_storeKey_neg(
     size_t*        bytesWritten)
 {
     SeosCryptoApi_Key key;
+
+    TEST_START();
 
     TEST_SUCCESS(SeosCryptoApi_Key_import(api, &key, &aesData));
 
@@ -66,7 +70,7 @@ test_CryptoServer_storeKey_neg(
     memset(&key, 0, sizeof(key));
     TEST_INVAL_HANDLE(CryptoServer_storeKey("okName", key));
 
-    TEST_OK();
+    TEST_FINISH();
 }
 
 static void
@@ -78,6 +82,8 @@ test_CryptoServer_loadKey_pos(
     SeosCryptoApi_Key key;
     SeosCryptoApi_Key_Data expData;
     SeosCryptoApi_Key_RemotePtr ptr;
+
+    TEST_START();
 
     // Import key into RPC server and store it, then free it
     TEST_SUCCESS(SeosCryptoApi_Key_import(api, &key, &aesData));
@@ -94,7 +100,7 @@ test_CryptoServer_loadKey_pos(
     Debug_ASSERT(!memcmp(&expData, &aesData, sizeof(SeosCryptoApi_Key_Data)));
     TEST_SUCCESS(SeosCryptoApi_Key_free(&key));
 
-    TEST_OK();
+    TEST_FINISH();
 }
 
 static void
@@ -105,6 +111,8 @@ test_CryptoServer_loadKey_neg(
     char keyName[] = "loadFail";
     SeosCryptoApi_Key key;
     SeosCryptoApi_Key_RemotePtr ptr;
+
+    TEST_START();
 
     TEST_SUCCESS(SeosCryptoApi_Key_import(api, &key, &aesData));
     TEST_SUCCESS(CryptoServer_storeKey(keyName, key));
@@ -118,7 +126,7 @@ test_CryptoServer_loadKey_neg(
     // Load key with non-existent name
     TEST_NOT_FOUND(CryptoServer_loadKey(CLIENT_ID, "foo", &ptr));
 
-    TEST_OK();
+    TEST_FINISH();
 }
 
 static void
@@ -134,6 +142,8 @@ test_CryptoServer_useKey(
     unsigned char ct[16] = CT;
     size_t ptLen = sizeof(buf);
     size_t ctLen = sizeof(ct);
+
+    TEST_START();
 
     TEST_SUCCESS(SeosCryptoApi_Key_import(api, &key, &aesData));
     TEST_SUCCESS(CryptoServer_storeKey(keyName, key));
@@ -153,7 +163,7 @@ test_CryptoServer_useKey(
 
     TEST_SUCCESS(SeosCryptoApi_Key_free(&key));
 
-    TEST_OK();
+    TEST_FINISH();
 }
 
 static void
@@ -165,6 +175,8 @@ test_CryptoServer_storageLimit(
     char keyName[9];
     size_t i;
     SeosCryptoApi_Key key;
+
+    TEST_START();
 
     i = 0;
     keepWriting = true;
@@ -187,7 +199,7 @@ test_CryptoServer_storageLimit(
         TEST_SUCCESS(SeosCryptoApi_Key_free(&key));
     }
 
-    TEST_OK();
+    TEST_FINISH();
 }
 
 int run()
