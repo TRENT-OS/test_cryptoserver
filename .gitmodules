@@ -1,0 +1,3 @@
+[submodule "components/CryptoServer"]
+	path = components/CryptoServer
+	url = ../../sc/cryptoserver.git
