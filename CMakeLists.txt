@@ -4,7 +4,6 @@ seos_set_config_file(config.h)
 
 seos_use_libs(
     SEOS_LIBS
-    SEOS_LIBS_LOGGER
     SEOS_CRYPTO_WITH_RPC_CLIENT
     SEOS_CRYPTO_IMPL_MBEDTLS
 )

@@ -5,7 +5,6 @@
  */
 
 #include "ChanMux/ChanMux.h"
-#include "ChanMux_config.h"
 #include "SeosError.h"
 #include "assert.h"
 #include <camkes.h>
@@ -105,7 +104,7 @@ ChanMux_dataAvailable_emit(unsigned int chanNum)
                     __func__, chanNum);
     switch (chanNum)
     {
-    case CHANNEL_MAIN_DATA:
+    case CHANMUX_CHANNEL_NVM:
         dataAvailable_emit();
         break;
 
@@ -169,7 +168,7 @@ ChanMuxIn_write(
     switch (chanNum)
     {
     //---------------------------------
-    case CHANNEL_MAIN_DATA:
+    case CHANMUX_CHANNEL_NVM:
         dp = &dataports[chanNum];
         break;
     //---------------------------------
@@ -204,7 +203,7 @@ ChanMuxIn_read(
     switch (chanNum)
     {
     //---------------------------------
-    case CHANNEL_MAIN_DATA:
+    case CHANMUX_CHANNEL_NVM:
         dp = &dataports[chanNum];
         break;
     //---------------------------------

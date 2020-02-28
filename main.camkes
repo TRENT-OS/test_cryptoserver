@@ -110,30 +110,5 @@ assembly {
                    "allowedIds":  [0,0,0,0,1] },
             ]
         };
-
-        // CryptoServer FS config
-        cryptoServer.disk_information =  {
-            "disk_size" : 0x6025800,
-            "block_size_default" : 512
-        };
-        //
-        // FIXME: These values have been more or less guessed; make sure this
-        //        is coherent with the storageLimits and the partition_sizes
-        //        once the new FS/PM code becomes available.
-        cryptoServer.partition_conf = {
-            "partition" :
-            [
-              { "partition_name" : "part0",
-                "partition_size" : 5000 },
-              { "partition_name" : "part1",
-                "partition_size" : 5000 },
-              { "partition_name" : "part2",
-                "partition_size" : 5000 },
-              { "partition_name" : "part3",
-                "partition_size" : 5000 },
-              { "partition_name" : "part4",
-                "partition_size" : 25000 },
-            ]
-        };
     }
 }
