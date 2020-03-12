@@ -3,11 +3,11 @@
  */
 
 #include "SeosCryptoApi.h"
+#include "CryptoServer.h"
 
 #include "TestMacros.h"
 
 #include <camkes.h>
-
 #include <string.h>
 #include <sel4/sel4.h> // needed for seL4_yield()
 
@@ -50,10 +50,9 @@ static SeosCryptoApi_Key_Data rsaPrvData =
 
 static void
 test_CryptoServer_access(
-    SeosCryptoApi* api)
+    SeosCryptoApiH hCrypto)
 {
-    SeosCryptoApi_Key key;
-    SeosCryptoApi_Key_RemotePtr ptr;
+    SeosCryptoApi_KeyH hKey;
     char name[16];
     size_t id, my_id = CLIENT_ID;
 
@@ -62,9 +61,9 @@ test_CryptoServer_access(
     snprintf(name, sizeof(name), "KEY_%i", my_id);
 
     // Import key into RPC server and store it, then free it
-    TEST_SUCCESS(SeosCryptoApi_Key_import(api, &key, &rsaPrvData));
-    TEST_SUCCESS(CryptoServer_storeKey(name, key));
-    TEST_SUCCESS(SeosCryptoApi_Key_free(&key));
+    TEST_SUCCESS(SeosCryptoApi_Key_import(&hKey, hCrypto, &rsaPrvData));
+    TEST_SUCCESS(CryptoServer_storeKey(hKey, name));
+    TEST_SUCCESS(SeosCryptoApi_Key_free(hKey));
 
     // Wait for all instances to finish importing their keys (see above).
     // TODO: Replace with a signal-based mechanism so we don't waste too much
@@ -84,13 +83,12 @@ test_CryptoServer_access(
         {
             // We don't really need the key so get rid of it -- this is just to
             // test that the matrix is correctly defined.
-            TEST_SUCCESS(CryptoServer_loadKey(id, name, &ptr));
-            TEST_SUCCESS(SeosCryptoApi_Key_migrate(api, &key, ptr));
-            TEST_SUCCESS(SeosCryptoApi_Key_free(&key));
+            TEST_SUCCESS(CryptoServer_loadKey(&hKey, hCrypto, id, name));
+            TEST_SUCCESS(SeosCryptoApi_Key_free(hKey));
         }
         else
         {
-            TEST_ACC_DENIED(CryptoServer_loadKey(id, name, &ptr));
+            TEST_ACC_DENIED(CryptoServer_loadKey(&hKey, hCrypto, id, name));
         }
     }
 
@@ -99,7 +97,7 @@ test_CryptoServer_access(
 
 int run()
 {
-    SeosCryptoApi api;
+    SeosCryptoApiH hCrypto;
     SeosCryptoApi_Config cfgClient =
     {
         .mode = SeosCryptoApi_Mode_RPC_CLIENT,
@@ -108,14 +106,14 @@ int run()
         .impl.client.dataPort = SeosCryptoDataport
     };
 
-    TEST_SUCCESS(SeosCryptoApi_init(&api, &cfgClient));
+    TEST_SUCCESS(SeosCryptoApi_init(&hCrypto, &cfgClient));
 
     // This test checks that the CryptoServer respects access rights configured
     // for multiple instances of clients (based on this code) trying to access each
     // other's keystores.
-    test_CryptoServer_access(&api);
+    test_CryptoServer_access(hCrypto);
 
-    TEST_SUCCESS(SeosCryptoApi_free(&api));
+    TEST_SUCCESS(SeosCryptoApi_free(hCrypto));
 
     return 0;
 }
