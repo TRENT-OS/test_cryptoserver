@@ -24,48 +24,71 @@ assembly {
         component   test_CryptoServer           unitTest;
 
         // CryptoServer internal signal
-        connection seL4Notification     initDone    (from cryptoServer.serverInitDone,      to cryptoServer.initDone);
+        connection seL4Notification     initDone    ( from cryptoServer.serverInitDone,
+                                                      to cryptoServer.initDone );
 
         // ChanMux <-> UART
-        connection  seL4RPCCall         call_0      (from chanMux.Output,                   to uartDrv.UartDrv);
-        connection  seL4RPCCall         call_1      (from uartDrv.Output,                   to chanMux.ChanMuxOut);
-        connection  seL4SharedData      shared_0    (from chanMux.outputDataPort,           to uartDrv.inputDataPort);
-        connection  seL4HardwareMMIO    mmio_0      (from uartDrv.uartRegBase,              to uartDev.uartRegBase);
+        connection  seL4RPCCall         call_0      ( from chanMux.Output,
+                                                      to uartDrv.UartDrv );
+        connection  seL4RPCCall         call_1      ( from uartDrv.Output,
+                                                      to chanMux.ChanMuxOut );
+        connection  seL4SharedData      shared_0    ( from chanMux.outputDataPort,
+                                                      to uartDrv.inputDataPort );
+        connection  seL4HardwareMMIO    mmio_0      ( from uartDrv.uartRegBase,
+                                                      to uartDev.uartRegBase );
 
         // CryptoServer <-> ChanMux
-        connection  seL4RPCCall         call_2      (from cryptoServer.ChanMuxRpc,          to chanMux.ChanMuxIn);
-        connection  seL4SharedData      shared_1    (from cryptoServer.chanMuxDataPort,     to chanMux.dataPort);
-        connection  seL4Notification    note_0      (from chanMux.dataAvailable,            to cryptoServer.ChanMuxSignal_dataAvailable);
+        connection  seL4RPCCall         call_2      ( from cryptoServer.ChanMuxRpc,
+                                                      to chanMux.ChanMuxIn );
+        connection  seL4SharedData      shared_1    ( from cryptoServer.chanMuxDataPort,
+                                                      to chanMux.dataPort );
+        connection  seL4Notification    note_0      ( from chanMux.dataAvailable,
+                                                      to cryptoServer.ChanMuxSignal_dataAvailable );
 
         // test_CryptoServer_access_0 <-> CryptoServer::CryptoAPI RPC
-        connection  seL4RPCCall         call_3      (from accessTest_0.SeosCryptoRpcServer, to cryptoServer.SeosCryptoRpcServer);
-        connection  seL4SharedData      shared_2    (from accessTest_0.SeosCryptoDataport,  to cryptoServer.SeosCryptoDataport);
+        connection  seL4RPCCall         call_3      ( from accessTest_0.SeosCryptoRpc_Server,
+                                                      to cryptoServer.SeosCryptoRpc_Server );
+        connection  seL4SharedData      shared_2    ( from accessTest_0.SeosCryptoDataport,
+                                                      to cryptoServer.SeosCryptoDataport );
         // test_CryptoServer_access_0 <-> CryptoServer::CryptoServer RPC
-        connection  seL4RPCCall         call_4      (from accessTest_0.CryptoServer,         to cryptoServer.CryptoServer);
+        connection  seL4RPCCall         call_4      ( from accessTest_0.CryptoServer,
+                                                      to cryptoServer.CryptoServer );
 
         // test_CryptoServer_access_1 <-> CryptoServer::CryptoAPI RPC
-        connection  seL4RPCCall         call_5      (from accessTest_1.SeosCryptoRpcServer, to cryptoServer.SeosCryptoRpcServer);
-        connection  seL4SharedData      shared_3    (from accessTest_1.SeosCryptoDataport,  to cryptoServer.SeosCryptoDataport);
+        connection  seL4RPCCall         call_5      ( from accessTest_1.SeosCryptoRpc_Server,
+                                                      to cryptoServer.SeosCryptoRpc_Server );
+        connection  seL4SharedData      shared_3    ( from accessTest_1.SeosCryptoDataport,
+                                                      to cryptoServer.SeosCryptoDataport );
         // test_CryptoServer_access_1 <-> CryptoServer::CryptoServer RPC
-        connection  seL4RPCCall         call_6      (from accessTest_1.CryptoServer,        to cryptoServer.CryptoServer);
+        connection  seL4RPCCall         call_6      ( from accessTest_1.CryptoServer,
+                                                      to cryptoServer.CryptoServer );
 
         // test_CryptoServer_access_2 <-> CryptoServer::CryptoAPI RPC
-        connection  seL4RPCCall         call_7      (from accessTest_2.SeosCryptoRpcServer, to cryptoServer.SeosCryptoRpcServer);
-        connection  seL4SharedData      shared_4    (from accessTest_2.SeosCryptoDataport,  to cryptoServer.SeosCryptoDataport);
+        connection  seL4RPCCall         call_7      ( from accessTest_2.SeosCryptoRpc_Server,
+                                                      to cryptoServer.SeosCryptoRpc_Server );
+        connection  seL4SharedData      shared_4    ( from accessTest_2.SeosCryptoDataport,
+                                                      to cryptoServer.SeosCryptoDataport );
         // test_CryptoServer_access_2 <-> CryptoServer::CryptoServer RPC
-        connection  seL4RPCCall         call_8      (from accessTest_2.CryptoServer,        to cryptoServer.CryptoServer);
+        connection  seL4RPCCall         call_8      ( from accessTest_2.CryptoServer,
+                                                      to cryptoServer.CryptoServer );
 
         // test_CryptoServer_access_3 <-> CryptoServer::CryptoAPI RPC
-        connection  seL4RPCCall         call_9      (from accessTest_3.SeosCryptoRpcServer, to cryptoServer.SeosCryptoRpcServer);
-        connection  seL4SharedData      shared_5    (from accessTest_3.SeosCryptoDataport,  to cryptoServer.SeosCryptoDataport);
+        connection  seL4RPCCall         call_9      ( from accessTest_3.SeosCryptoRpc_Server,
+                                                      to cryptoServer.SeosCryptoRpc_Server );
+        connection  seL4SharedData      shared_5    ( from accessTest_3.SeosCryptoDataport,
+                                                      to cryptoServer.SeosCryptoDataport );
         // test_CryptoServer_access_3 <-> CryptoServer::CryptoServer RPC
-        connection  seL4RPCCall         call_10      (from accessTest_3.CryptoServer,       to cryptoServer.CryptoServer);
+        connection  seL4RPCCall         call_10     ( from accessTest_3.CryptoServer,
+                                                      to cryptoServer.CryptoServer );
 
         // unitTest <-> CryptoServer::CryptoAPI RPC
-        connection  seL4RPCCall         call_11      (from unitTest.SeosCryptoRpcServer,    to cryptoServer.SeosCryptoRpcServer);
-        connection  seL4SharedData      shared_6     (from unitTest.SeosCryptoDataport,     to cryptoServer.SeosCryptoDataport);
+        connection  seL4RPCCall         call_11     ( from unitTest.SeosCryptoRpc_Server,
+                                                       to cryptoServer.SeosCryptoRpc_Server );
+        connection  seL4SharedData      shared_6    ( from unitTest.SeosCryptoDataport,
+                                                      to cryptoServer.SeosCryptoDataport );
         // unitTest <-> CryptoServer::CryptoServer RPC
-        connection  seL4RPCCall         call_12      (from unitTest.CryptoServer,           to cryptoServer.CryptoServer);
+        connection  seL4RPCCall         call_12     ( from unitTest.CryptoServer,
+                                                      to cryptoServer.CryptoServer );
     }
 
     configuration{
@@ -76,18 +99,18 @@ assembly {
 
         // When assigning IDs for each app, we need to ensure that they have the
         // SAME ID on both interfaces; the CryptoServer IF will be used to init
-        // crypto and keystore contexts, the SeosCryptoRpcServer IF will be used
+        // crypto and keystore contexts, the SeosCryptoRpc_Server IF will be used
         // to use those -- so they MUST match!!!
-        accessTest_0.CryptoServer_attributes           = 0;
-        accessTest_0.SeosCryptoRpcServer_attributes    = 0;
-        accessTest_1.CryptoServer_attributes           = 1;
-        accessTest_1.SeosCryptoRpcServer_attributes    = 1;
-        accessTest_2.CryptoServer_attributes           = 2;
-        accessTest_2.SeosCryptoRpcServer_attributes    = 2;
-        accessTest_3.CryptoServer_attributes           = 3;
-        accessTest_3.SeosCryptoRpcServer_attributes    = 3;
-        unitTest.CryptoServer_attributes               = 4;
-        unitTest.SeosCryptoRpcServer_attributes        = 4;
+        accessTest_0.CryptoServer_attributes            = 0;
+        accessTest_0.SeosCryptoRpc_Server_attributes    = 0;
+        accessTest_1.CryptoServer_attributes            = 1;
+        accessTest_1.SeosCryptoRpc_Server_attributes    = 1;
+        accessTest_2.CryptoServer_attributes            = 2;
+        accessTest_2.SeosCryptoRpc_Server_attributes    = 2;
+        accessTest_3.CryptoServer_attributes            = 3;
+        accessTest_3.SeosCryptoRpc_Server_attributes    = 3;
+        unitTest.CryptoServer_attributes                = 4;
+        unitTest.SeosCryptoRpc_Server_attributes        = 4;
 
         cryptoServer.config = {
             // Configure how many clients we have
