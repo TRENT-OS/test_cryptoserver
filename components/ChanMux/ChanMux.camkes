@@ -4,7 +4,7 @@
 
 import "../Uart/UartInf.camkes";
 
-import "ChanMuxInf.camkes";
+import <seos_if_chanMux.camkes>;
 
 component ChanMux {
 
@@ -12,7 +12,7 @@ component ChanMux {
     // interface to MAIN
     dataport  Buf                 dataPort;
     emits     DataAvailableEvent  dataAvailable;
-    provides  ChanMuxInInf        ChanMuxIn;
+    provides  ChanMuxDriverInf        ChanMuxIn;
 
     //-------------------------------------------------
     // MUX Uart interface

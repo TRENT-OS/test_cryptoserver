@@ -4,6 +4,7 @@ seos_set_config_file(config.h)
 
 seos_use_libs(
     SEOS_LIBS
+    SEOS_CHANMUX
     SEOS_CRYPTO_WITH_RPC_CLIENT
     SEOS_CRYPTO_IMPL_MBEDTLS
 )
@@ -110,6 +111,7 @@ DeclareCAmkESComponent(ChanMux
     LIBS
         seos_core_api
         seos_libs
+        chanmux_server
 )
 
 DeclareCAmkESRootserver(main.camkes)
