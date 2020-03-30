@@ -2,7 +2,7 @@
  * Copyright (C) 2019-2020, Hensoldt Cyber GmbH
  */
 
-#include "SeosCryptoApi.h"
+#include "OS_Crypto.h"
 #include "CryptoServer.h"
 
 #include "TestMacros.h"
@@ -10,9 +10,9 @@
 #include <camkes.h>
 #include <string.h>
 
-static SeosCryptoApi_Key_Data aesData =
+static OS_CryptoKey_Data_t aesData =
 {
-    .type = SeosCryptoApi_Key_TYPE_AES,
+    .type = OS_CryptoKey_TYPE_AES,
     .attribs.exportable = true,
     .data.aes = {
         .len   = 24,
@@ -30,18 +30,18 @@ static SeosCryptoApi_Key_Data aesData =
 
 static void
 test_CryptoServer_storeKey_pos(
-    SeosCryptoApiH hCrypto,
-    size_t*        bytesWritten)
+    OS_Crypto_Handle_t hCrypto,
+    size_t*            bytesWritten)
 {
     char keyName[] = "storeOk";
-    SeosCryptoApi_KeyH hKey;
+    OS_CryptoKey_Handle_t hKey;
 
     TEST_START();
 
     // Import key into RPC server and store it, then free it
-    TEST_SUCCESS(SeosCryptoApi_Key_import(&hKey, hCrypto, &aesData));
+    TEST_SUCCESS(OS_CryptoKey_import(&hKey, hCrypto, &aesData));
     TEST_SUCCESS(CryptoServer_storeKey(hKey, keyName));
-    TEST_SUCCESS(SeosCryptoApi_Key_free(hKey));
+    TEST_SUCCESS(OS_CryptoKey_free(hKey));
 
     *bytesWritten += sizeof(aesData);
 
@@ -50,14 +50,14 @@ test_CryptoServer_storeKey_pos(
 
 static void
 test_CryptoServer_storeKey_neg(
-    SeosCryptoApiH hCrypto,
-    size_t*        bytesWritten)
+    OS_Crypto_Handle_t hCrypto,
+    size_t*            bytesWritten)
 {
-    SeosCryptoApi_KeyH hKey;
+    OS_CryptoKey_Handle_t hKey;
 
     TEST_START();
 
-    TEST_SUCCESS(SeosCryptoApi_Key_import(&hKey, hCrypto, &aesData));
+    TEST_SUCCESS(OS_CryptoKey_import(&hKey, hCrypto, &aesData));
 
     // No name
     TEST_INVAL_PARAM(CryptoServer_storeKey(hKey, ""));
@@ -68,52 +68,52 @@ test_CryptoServer_storeKey_neg(
     // Invalid key object
     TEST_INVAL_HANDLE(CryptoServer_storeKey(NULL, "okName"));
 
-    TEST_SUCCESS(SeosCryptoApi_Key_free(hKey));
+    TEST_SUCCESS(OS_CryptoKey_free(hKey));
 
     TEST_FINISH();
 }
 
 static void
 test_CryptoServer_loadKey_pos(
-    SeosCryptoApiH hCrypto,
-    size_t*        bytesWritten)
+    OS_Crypto_Handle_t hCrypto,
+    size_t*            bytesWritten)
 {
     char keyName[] = "loadOk";
-    SeosCryptoApi_KeyH hKey;
-    SeosCryptoApi_Key_Data expData;
+    OS_CryptoKey_Handle_t hKey;
+    OS_CryptoKey_Data_t expData;
 
     TEST_START();
 
     // Import key into RPC server and store it, then free it
-    TEST_SUCCESS(SeosCryptoApi_Key_import(&hKey, hCrypto, &aesData));
+    TEST_SUCCESS(OS_CryptoKey_import(&hKey, hCrypto, &aesData));
     TEST_SUCCESS(CryptoServer_storeKey(hKey, keyName));
-    TEST_SUCCESS(SeosCryptoApi_Key_free(hKey));
+    TEST_SUCCESS(OS_CryptoKey_free(hKey));
 
     *bytesWritten += sizeof(aesData);
 
     // Load key from RPC server storage into memory, migrate into local API
     // instance and read it back
     TEST_SUCCESS(CryptoServer_loadKey(&hKey, hCrypto, CLIENT_ID, keyName));
-    TEST_SUCCESS(SeosCryptoApi_Key_export(hKey, &expData));
-    Debug_ASSERT(!memcmp(&expData, &aesData, sizeof(SeosCryptoApi_Key_Data)));
-    TEST_SUCCESS(SeosCryptoApi_Key_free(hKey));
+    TEST_SUCCESS(OS_CryptoKey_export(hKey, &expData));
+    Debug_ASSERT(!memcmp(&expData, &aesData, sizeof(OS_CryptoKey_Data_t)));
+    TEST_SUCCESS(OS_CryptoKey_free(hKey));
 
     TEST_FINISH();
 }
 
 static void
 test_CryptoServer_loadKey_neg(
-    SeosCryptoApiH hCrypto,
-    size_t*        bytesWritten)
+    OS_Crypto_Handle_t hCrypto,
+    size_t*            bytesWritten)
 {
     char keyName[] = "loadFail";
-    SeosCryptoApi_KeyH hKey;
+    OS_CryptoKey_Handle_t hKey;
 
     TEST_START();
 
-    TEST_SUCCESS(SeosCryptoApi_Key_import(&hKey, hCrypto, &aesData));
+    TEST_SUCCESS(OS_CryptoKey_import(&hKey, hCrypto, &aesData));
     TEST_SUCCESS(CryptoServer_storeKey(hKey, keyName));
-    TEST_SUCCESS(SeosCryptoApi_Key_free(hKey));
+    TEST_SUCCESS(OS_CryptoKey_free(hKey));
 
     *bytesWritten += sizeof(aesData);
 
@@ -134,12 +134,12 @@ test_CryptoServer_loadKey_neg(
 
 static void
 test_CryptoServer_useKey(
-    SeosCryptoApiH hCrypto,
-    size_t*        bytesWritten)
+    OS_Crypto_Handle_t hCrypto,
+    size_t*            bytesWritten)
 {
     char keyName[] = "useOk";
-    SeosCryptoApi_KeyH hKey;
-    SeosCryptoApi_CipherH hCipher;
+    OS_CryptoKey_Handle_t hKey;
+    OS_CryptoCipher_Handle_t hCipher;
     unsigned char buf[16] = PT;
     unsigned char ct[16] = CT;
     size_t ptLen = sizeof(buf);
@@ -147,36 +147,36 @@ test_CryptoServer_useKey(
 
     TEST_START();
 
-    TEST_SUCCESS(SeosCryptoApi_Key_import(&hKey, hCrypto, &aesData));
+    TEST_SUCCESS(OS_CryptoKey_import(&hKey, hCrypto, &aesData));
     TEST_SUCCESS(CryptoServer_storeKey(hKey, keyName));
-    TEST_SUCCESS(SeosCryptoApi_Key_free(hKey));
+    TEST_SUCCESS(OS_CryptoKey_free(hKey));
     TEST_SUCCESS(CryptoServer_loadKey(&hKey, hCrypto, CLIENT_ID, keyName));
 
     *bytesWritten += sizeof(aesData);
 
     // Use newly loaded and re-imported key for some crypto
-    TEST_SUCCESS(SeosCryptoApi_Cipher_init(&hCipher, hCrypto, hKey,
-                                           SeosCryptoApi_Cipher_ALG_AES_ECB_ENC,
+    TEST_SUCCESS(OS_CryptoCipher_init(&hCipher, hCrypto, hKey,
+                                           OS_CryptoCipher_ALG_AES_ECB_ENC,
                                            NULL, 0));
-    TEST_SUCCESS(SeosCryptoApi_Cipher_process(hCipher, buf, ptLen, buf, &ctLen));
+    TEST_SUCCESS(OS_CryptoCipher_process(hCipher, buf, ptLen, buf, &ctLen));
     Debug_ASSERT(ctLen == ptLen);
     Debug_ASSERT(!memcmp(buf, ct, ptLen));
-    TEST_SUCCESS(SeosCryptoApi_Cipher_free(hCipher));
+    TEST_SUCCESS(OS_CryptoCipher_free(hCipher));
 
-    TEST_SUCCESS(SeosCryptoApi_Key_free(hKey));
+    TEST_SUCCESS(OS_CryptoKey_free(hKey));
 
     TEST_FINISH();
 }
 
 static void
 test_CryptoServer_storageLimit(
-    SeosCryptoApiH hCrypto,
-    size_t         bytesWritten)
+    OS_Crypto_Handle_t hCrypto,
+    size_t             bytesWritten)
 {
     bool keepWriting;
     char keyName[9];
     size_t i;
-    SeosCryptoApi_KeyH hKey;
+    OS_CryptoKey_Handle_t hKey;
 
     TEST_START();
 
@@ -186,7 +186,7 @@ test_CryptoServer_storageLimit(
     {
         // Fill up keystore until we reach the limit
         snprintf(keyName, sizeof(keyName), "fill%02d", i++);
-        TEST_SUCCESS(SeosCryptoApi_Key_import(&hKey, hCrypto, &aesData));
+        TEST_SUCCESS(OS_CryptoKey_import(&hKey, hCrypto, &aesData));
         bytesWritten += sizeof(aesData);
         // Expect to receive an error
         if (bytesWritten > STORAGE_LIMIT)
@@ -198,7 +198,7 @@ test_CryptoServer_storageLimit(
         {
             TEST_SUCCESS(CryptoServer_storeKey(hKey, keyName));
         }
-        TEST_SUCCESS(SeosCryptoApi_Key_free(hKey));
+        TEST_SUCCESS(OS_CryptoKey_free(hKey));
     }
 
     TEST_FINISH();
@@ -206,17 +206,17 @@ test_CryptoServer_storageLimit(
 
 int run()
 {
-    SeosCryptoApiH hCrypto;
+    OS_Crypto_Handle_t hCrypto;
     size_t bytesWritten;
-    SeosCryptoApi_Config cfgClient =
+    OS_Crypto_Config_t cfgClient =
     {
-        .mode = SeosCryptoApi_Mode_RPC_CLIENT,
+        .mode = OS_Crypto_MODE_RPC_CLIENT,
         .mem.malloc = malloc,
         .mem.free = free,
         .impl.client.dataPort = SeosCryptoDataport
     };
 
-    TEST_SUCCESS(SeosCryptoApi_init(&hCrypto, &cfgClient));
+    TEST_SUCCESS(OS_Crypto_init(&hCrypto, &cfgClient));
 
     // Keep track of amounts of byte we store, so we know this for the final test
     bytesWritten = 0;
@@ -234,7 +234,7 @@ int run()
     // Fill up the keystore until we reach a storage limit
     test_CryptoServer_storageLimit(hCrypto, bytesWritten);
 
-    TEST_SUCCESS(SeosCryptoApi_free(hCrypto));
+    TEST_SUCCESS(OS_Crypto_free(hCrypto));
 
     return 0;
 }

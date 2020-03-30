@@ -3,14 +3,14 @@
  */
 
 import <seos_if_cryptoServer.camkes>;
-import <seos_if_cryptoApi.camkes>;
+import <if_OS_Crypto.camkes>;
 
 component test_CryptoServer {
     control;
 
     // Crypto API provided by Crypto API RPC instance on CryptoServer
     dataport    Buf                         SeosCryptoDataport;
-    uses        seos_if_cryptoApi           SeosCryptoRpc_Server;
+    uses        if_OS_Crypto                OS_CryptoRpcServer;
 
     // Additional interface provided by CryptoServer itself
     uses        seos_if_cryptoServer        CryptoServer;
