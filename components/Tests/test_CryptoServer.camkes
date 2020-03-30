@@ -2,8 +2,8 @@
  * Copyright (C) 2019, Hensoldt Cyber GmbH
  */
 
-import <seos_if_cryptoServer.camkes>;
 import <if_OS_Crypto.camkes>;
+import <CryptoServer/camkes/if_CryptoServer.camkes>;
 
 component test_CryptoServer {
     control;
@@ -13,5 +13,5 @@ component test_CryptoServer {
     uses        if_OS_Crypto                OS_CryptoRpcServer;
 
     // Additional interface provided by CryptoServer itself
-    uses        seos_if_cryptoServer        CryptoServer;
+    uses        if_CryptoServer             CryptoServer;
 }

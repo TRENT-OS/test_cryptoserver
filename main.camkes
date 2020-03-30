@@ -4,7 +4,8 @@
 
 import <std_connector.camkes>;
 
-import <CryptoServer.camkes>;
+import <CryptoServer/camkes/CryptoServer.camkes>;
+
 import "components/ChanMux/ChanMux.camkes";
 import "components/Uart/Uart.camkes";
 

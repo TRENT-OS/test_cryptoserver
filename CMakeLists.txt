@@ -9,21 +9,18 @@ seos_use_libs(
     SEOS_CRYPTO_IMPL_MBEDTLS
 )
 
+# Add component path, so we can have use the CryptoServer component
+CAmkESAddImportPath("${SEOS_COMPONENTS_DIR}")
 
-# adds the CryptoServer component. The current implementation uses ChanMUX
-# directly and thus expectes to find the file ChanMuxInf.camkes in the CAmkES
-# include paths. Actually, the CryptoServer shuld be agnostic of ChanMUX and
-# just reqiue a partition manager interface that gives it access to a partition
-# that is used for its internal Keystore then.
-SET(SEOS_COMPONENTS_CRYPTOSERVER_DIR "${SEOS_COMPONENTS_DIR}/cryptoserver")
-CAmkESAddImportPath(${SEOS_COMPONENTS_CRYPTOSERVER_DIR})
-CAmkESAddImportPath("components/ChanMux")
-include(${SEOS_COMPONENTS_CRYPTOSERVER_DIR}/CMakeLists.txt)
+# Set path to src, inc, camkes folders of CryptoServer
+SET(SEOS_COMPONENTS_CRYPTOSERVER_DIR "${SEOS_COMPONENTS_DIR}/CryptoServer")
 
+# Include CryptoServer CMakeList
+include("${SEOS_COMPONENTS_CRYPTOSERVER_DIR}/CMakeLists.txt")
 
 DeclareCAmkESComponent(test_CryptoServer_access_0
     INCLUDES
-        ${SEOS_COMPONENTS_CRYPTOSERVER_DIR}/src
+        ${SEOS_COMPONENTS_CRYPTOSERVER_DIR}/inc
     SOURCES
         components/Tests/src/test_CryptoServer_access.c
     C_FLAGS
@@ -38,7 +35,7 @@ DeclareCAmkESComponent(test_CryptoServer_access_0
 
 DeclareCAmkESComponent(test_CryptoServer_access_1
     INCLUDES
-        ${SEOS_COMPONENTS_CRYPTOSERVER_DIR}/src
+        ${SEOS_COMPONENTS_CRYPTOSERVER_DIR}/inc
     SOURCES
         components/Tests/src/test_CryptoServer_access.c
     C_FLAGS
@@ -53,7 +50,7 @@ DeclareCAmkESComponent(test_CryptoServer_access_1
 
 DeclareCAmkESComponent(test_CryptoServer_access_2
     INCLUDES
-        ${SEOS_COMPONENTS_CRYPTOSERVER_DIR}/src
+        ${SEOS_COMPONENTS_CRYPTOSERVER_DIR}/inc
     SOURCES
         components/Tests/src/test_CryptoServer_access.c
     C_FLAGS
@@ -68,7 +65,7 @@ DeclareCAmkESComponent(test_CryptoServer_access_2
 
 DeclareCAmkESComponent(test_CryptoServer_access_3
     INCLUDES
-        ${SEOS_COMPONENTS_CRYPTOSERVER_DIR}/src
+        ${SEOS_COMPONENTS_CRYPTOSERVER_DIR}/inc
     SOURCES
         components/Tests/src/test_CryptoServer_access.c
     C_FLAGS
@@ -83,7 +80,7 @@ DeclareCAmkESComponent(test_CryptoServer_access_3
 
 DeclareCAmkESComponent(test_CryptoServer
     INCLUDES
-        ${SEOS_COMPONENTS_CRYPTOSERVER_DIR}/src
+        ${SEOS_COMPONENTS_CRYPTOSERVER_DIR}/inc
     SOURCES
         components/Tests/src/test_CryptoServer.c
     C_FLAGS
