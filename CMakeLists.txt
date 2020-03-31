@@ -104,7 +104,6 @@ DeclareCAmkESComponent(ChanMux
         -Wall -Werror
     LIBS
         seos_core_api
-        seos_libs
         chanmux_server
 )
 
