@@ -9,7 +9,8 @@ seos_use_libs(
     SEOS_CRYPTO_IMPL_MBEDTLS
 )
 
-# Add component path, so we can have use the CryptoServer component
+# Add component path, so we can use the CryptoServer component provided with the
+# SDK package
 CAmkESAddImportPath("${SEOS_COMPONENTS_DIR}")
 
 # Set path to src, inc, camkes folders of CryptoServer
