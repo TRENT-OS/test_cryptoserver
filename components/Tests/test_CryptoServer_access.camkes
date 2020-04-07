@@ -10,7 +10,7 @@ component test_CryptoServer_access_0 {
 
     // Crypto API provided by Crypto API RPC instance on CryptoServer
     dataport    Buf                         SeosCryptoDataport;
-    uses        if_OS_Crypto                OS_CryptoRpcServer;
+    uses        if_OS_Crypto                CryptoLibServer;
 
     // Additional interface provided by CryptoServer itself
     uses        if_CryptoServer             CryptoServer;
@@ -21,7 +21,7 @@ component test_CryptoServer_access_1 {
 
     // Crypto API provided by Crypto API RPC instance on CryptoServer
     dataport    Buf                         SeosCryptoDataport;
-    uses        if_OS_Crypto                OS_CryptoRpcServer;
+    uses        if_OS_Crypto                CryptoLibServer;
 
     // Additional interface provided by CryptoServer itself
     uses        if_CryptoServer             CryptoServer;
@@ -32,7 +32,7 @@ component test_CryptoServer_access_2 {
 
     // Crypto API provided by Crypto API RPC instance on CryptoServer
     dataport    Buf                         SeosCryptoDataport;
-    uses        if_OS_Crypto                OS_CryptoRpcServer;
+    uses        if_OS_Crypto                CryptoLibServer;
 
     // Additional interface provided by CryptoServer itself
     uses        if_CryptoServer             CryptoServer;
@@ -43,7 +43,7 @@ component test_CryptoServer_access_3 {
 
     // Crypto API provided by Crypto API RPC instance on CryptoServer
     dataport    Buf                         SeosCryptoDataport;
-    uses        if_OS_Crypto                OS_CryptoRpcServer;
+    uses        if_OS_Crypto                CryptoLibServer;
 
     // Additional interface provided by CryptoServer itself
     uses        if_CryptoServer             CryptoServer;
