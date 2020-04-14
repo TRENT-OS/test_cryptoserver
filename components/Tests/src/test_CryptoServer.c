@@ -66,7 +66,7 @@ test_CryptoServer_storeKey_neg(
     TEST_INVAL_PARAM(CryptoServer_storeKey(hKey, "fat-likes-only-8-chars"));
 
     // Invalid key object
-    TEST_INVAL_HANDLE(CryptoServer_storeKey(NULL, "okName"));
+    TEST_INVAL_PARAM(CryptoServer_storeKey(NULL, "okName"));
 
     TEST_SUCCESS(OS_CryptoKey_free(hKey));
 
@@ -210,10 +210,10 @@ int run()
     size_t bytesWritten;
     OS_Crypto_Config_t cfgClient =
     {
-        .mode = OS_Crypto_MODE_RPC_CLIENT,
+        .mode = OS_Crypto_MODE_CLIENT_ONLY,
         .mem.malloc = malloc,
         .mem.free = free,
-        .impl.client.dataPort = SeosCryptoDataport
+        .rpc.client.dataPort = SeosCryptoDataport
     };
 
     TEST_SUCCESS(OS_Crypto_init(&hCrypto, &cfgClient));

@@ -100,10 +100,10 @@ int run()
     OS_Crypto_Handle_t hCrypto;
     OS_Crypto_Config_t cfgClient =
     {
-        .mode = OS_Crypto_MODE_RPC_CLIENT,
+        .mode = OS_Crypto_MODE_CLIENT_ONLY,
         .mem.malloc = malloc,
         .mem.free = free,
-        .impl.client.dataPort = SeosCryptoDataport
+        .rpc.client.dataPort = SeosCryptoDataport
     };
 
     TEST_SUCCESS(OS_Crypto_init(&hCrypto, &cfgClient));
