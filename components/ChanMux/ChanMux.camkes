@@ -19,8 +19,4 @@ component ChanMux {
     dataport  Buf                 outputDataPort;
     uses      UartInf             Output;
     provides  ChanMuxOutInf       ChanMuxOut;
-
-    //-------------------------------------------------
-    // Synchronization Primitives
-    has mutex Mutex;
 }
