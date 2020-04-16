@@ -9,7 +9,7 @@ component test_CryptoServer {
     control;
 
     // Crypto API provided by Crypto API RPC instance on CryptoServer
-    dataport    Buf                         SeosCryptoDataport;
+    dataport    Buf                         CryptoLibDataport;
     uses        if_OS_Crypto                CryptoLibServer;
 
     // Additional interface provided by CryptoServer itself

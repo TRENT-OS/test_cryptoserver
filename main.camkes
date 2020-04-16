@@ -49,8 +49,8 @@ assembly {
         // test_CryptoServer_access_0 <-> CryptoServer::CryptoAPI RPC
         connection  seL4RPCCall         call_3      ( from accessTest_0.CryptoLibServer,
                                                       to cryptoServer.CryptoLibServer );
-        connection  seL4SharedData      shared_2    ( from accessTest_0.SeosCryptoDataport,
-                                                      to cryptoServer.SeosCryptoDataport );
+        connection  seL4SharedData      shared_2    ( from accessTest_0.CryptoLibDataport,
+                                                      to cryptoServer.CryptoLibDataport );
         // test_CryptoServer_access_0 <-> CryptoServer::CryptoServer RPC
         connection  seL4RPCCall         call_4      ( from accessTest_0.CryptoServer,
                                                       to cryptoServer.CryptoServer );
@@ -58,8 +58,8 @@ assembly {
         // test_CryptoServer_access_1 <-> CryptoServer::CryptoAPI RPC
         connection  seL4RPCCall         call_5      ( from accessTest_1.CryptoLibServer,
                                                       to cryptoServer.CryptoLibServer );
-        connection  seL4SharedData      shared_3    ( from accessTest_1.SeosCryptoDataport,
-                                                      to cryptoServer.SeosCryptoDataport );
+        connection  seL4SharedData      shared_3    ( from accessTest_1.CryptoLibDataport,
+                                                      to cryptoServer.CryptoLibDataport );
         // test_CryptoServer_access_1 <-> CryptoServer::CryptoServer RPC
         connection  seL4RPCCall         call_6      ( from accessTest_1.CryptoServer,
                                                       to cryptoServer.CryptoServer );
@@ -67,8 +67,8 @@ assembly {
         // test_CryptoServer_access_2 <-> CryptoServer::CryptoAPI RPC
         connection  seL4RPCCall         call_7      ( from accessTest_2.CryptoLibServer,
                                                       to cryptoServer.CryptoLibServer );
-        connection  seL4SharedData      shared_4    ( from accessTest_2.SeosCryptoDataport,
-                                                      to cryptoServer.SeosCryptoDataport );
+        connection  seL4SharedData      shared_4    ( from accessTest_2.CryptoLibDataport,
+                                                      to cryptoServer.CryptoLibDataport );
         // test_CryptoServer_access_2 <-> CryptoServer::CryptoServer RPC
         connection  seL4RPCCall         call_8      ( from accessTest_2.CryptoServer,
                                                       to cryptoServer.CryptoServer );
@@ -76,8 +76,8 @@ assembly {
         // test_CryptoServer_access_3 <-> CryptoServer::CryptoAPI RPC
         connection  seL4RPCCall         call_9      ( from accessTest_3.CryptoLibServer,
                                                       to cryptoServer.CryptoLibServer );
-        connection  seL4SharedData      shared_5    ( from accessTest_3.SeosCryptoDataport,
-                                                      to cryptoServer.SeosCryptoDataport );
+        connection  seL4SharedData      shared_5    ( from accessTest_3.CryptoLibDataport,
+                                                      to cryptoServer.CryptoLibDataport );
         // test_CryptoServer_access_3 <-> CryptoServer::CryptoServer RPC
         connection  seL4RPCCall         call_10     ( from accessTest_3.CryptoServer,
                                                       to cryptoServer.CryptoServer );
@@ -85,8 +85,8 @@ assembly {
         // unitTest <-> CryptoServer::CryptoAPI RPC
         connection  seL4RPCCall         call_11     ( from unitTest.CryptoLibServer,
                                                        to cryptoServer.CryptoLibServer );
-        connection  seL4SharedData      shared_6    ( from unitTest.SeosCryptoDataport,
-                                                      to cryptoServer.SeosCryptoDataport );
+        connection  seL4SharedData      shared_6    ( from unitTest.CryptoLibDataport,
+                                                      to cryptoServer.CryptoLibDataport );
         // unitTest <-> CryptoServer::CryptoServer RPC
         connection  seL4RPCCall         call_12     ( from unitTest.CryptoServer,
                                                       to cryptoServer.CryptoServer );

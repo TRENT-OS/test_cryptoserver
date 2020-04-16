@@ -103,7 +103,7 @@ int run()
         .mode = OS_Crypto_MODE_CLIENT_ONLY,
         .mem.malloc = malloc,
         .mem.free = free,
-        .rpc.client.dataPort = SeosCryptoDataport
+        .rpc.client.dataPort = CryptoLibDataport
     };
 
     TEST_SUCCESS(OS_Crypto_init(&hCrypto, &cfgClient));
