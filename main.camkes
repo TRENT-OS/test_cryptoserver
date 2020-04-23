@@ -24,10 +24,6 @@ assembly {
         component   test_CryptoServer_access_3  accessTest_3;
         component   test_CryptoServer           unitTest;
 
-        // CryptoServer internal signal
-        connection seL4Notification     initDone    ( from cryptoServer.serverInitDone,
-                                                      to cryptoServer.initDone );
-
         // ChanMux <-> UART
         connection  seL4RPCCall         call_0      ( from chanMux.Output,
                                                       to uartDrv.UartDrv );
@@ -134,5 +130,8 @@ assembly {
                    "allowedIds":  [0,0,0,0,1] },
             ]
         };
+
+        // Semaphore to sync RPC with init
+        cryptoServer.sem_init = 0;
     }
 }
