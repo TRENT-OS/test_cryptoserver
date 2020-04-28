@@ -6,7 +6,6 @@ seos_use_libs(
     SEOS_LIBS
     SEOS_CHANMUX
     SEOS_CRYPTO_WITH_RPC_CLIENT
-    SEOS_CRYPTO_IMPL_MBEDTLS
 )
 
 # Set path to src, inc, camkes folders of CryptoServer
