@@ -185,7 +185,7 @@ test_CryptoServer_storageLimit(
     while (keepWriting)
     {
         // Fill up keystore until we reach the limit
-        snprintf(keyName, sizeof(keyName), "fill%02d", i++);
+        snprintf(keyName, sizeof(keyName), "fill%02zu", i++);
         TEST_SUCCESS(OS_CryptoKey_import(&hKey, hCrypto, &aesData));
         bytesWritten += sizeof(aesData);
         // Expect to receive an error
