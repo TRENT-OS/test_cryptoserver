@@ -105,16 +105,20 @@ assembly {
         // SAME ID on both interfaces; the CryptoServer IF will be used to init
         // crypto and keystore contexts, the CryptoLibServer IF will be used
         // to use those -- so they MUST match!!!
-        accessTest_0.CryptoServer_attributes         = 0;
-        accessTest_0.CryptoLibServer_attributes      = 0;
-        accessTest_1.CryptoServer_attributes         = 1;
-        accessTest_1.CryptoLibServer_attributes      = 1;
-        accessTest_2.CryptoServer_attributes         = 2;
-        accessTest_2.CryptoLibServer_attributes      = 2;
-        accessTest_3.CryptoServer_attributes         = 3;
-        accessTest_3.CryptoLibServer_attributes      = 3;
-        unitTest.CryptoServer_attributes             = 4;
-        unitTest.CryptoLibServer_attributes          = 4;
+        accessTest_0.CryptoServer_attributes         = CRYPTOSERVER_ID_accessTest_0;
+        accessTest_0.CryptoLibServer_attributes      = CRYPTOSERVER_ID_accessTest_0;
+
+        accessTest_1.CryptoServer_attributes         = CRYPTOSERVER_ID_accessTest_1;
+        accessTest_1.CryptoLibServer_attributes      = CRYPTOSERVER_ID_accessTest_1;
+
+        accessTest_2.CryptoServer_attributes         = CRYPTOSERVER_ID_accessTest_2;
+        accessTest_2.CryptoLibServer_attributes      = CRYPTOSERVER_ID_accessTest_2;
+
+        accessTest_3.CryptoServer_attributes         = CRYPTOSERVER_ID_accessTest_3;
+        accessTest_3.CryptoLibServer_attributes      = CRYPTOSERVER_ID_accessTest_3;
+
+        unitTest.CryptoServer_attributes             = CRYPTOSERVER_ID_unitTest;
+        unitTest.CryptoLibServer_attributes          = CRYPTOSERVER_ID_unitTest;
 
         cryptoServer.config = {
             // Configure how many clients we have
