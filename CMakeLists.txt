@@ -8,6 +8,13 @@ seos_use_libs(
     SEOS_CRYPTO_WITH_RPC_CLIENT
 )
 
+project(system_config C)
+add_library(${PROJECT_NAME} INTERFACE)
+target_include_directories(${PROJECT_NAME} INTERFACE ${CMAKE_CURRENT_LIST_DIR})
+
+
+project(test_cryptoserver C)
+
 # Set path to src, inc, camkes folders of CryptoServer
 SET(SEOS_COMPONENTS_CRYPTOSERVER_DIR "${SEOS_COMPONENTS_DIR}/CryptoServer")
 
