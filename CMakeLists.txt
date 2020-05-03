@@ -103,16 +103,11 @@ DeclareCAmkESComponent(UartDrv
         -Wall -Werror
 )
 
-DeclareCAmkESComponent(ChanMux
-    SOURCES
-        components/ChanMux/src/ChanMux_Instance.c
-    C_FLAGS
-        -Wall -Werror
-    LIBS
-        seos_core_api
-        chanmux_server
+DeclareCAmkESComponent_ChanMux(
+    ChanMux
+    components/ChanMux/ChanMux_config.c
+    system_config
 )
 
-DeclareCAmkESRootserver(main.camkes)
-GenerateCAmkESRootServer()
+DeclareAndCreateCamkESSystem(main.camkes)
 GenerateSimulateScript()

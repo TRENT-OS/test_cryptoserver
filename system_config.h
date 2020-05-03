@@ -36,18 +36,14 @@
 // ChanMUX
 //-----------------------------------------------------------------------------
 
-enum
-{
-    CHANMUX_CHANNEL_UNUSED_0,   // 0
-    CHANMUX_CHANNEL_UNUSED_1,   // 1
-    CHANMUX_CHANNEL_UNUSED_2,   // 2
-    CHANMUX_CHANNEL_UNUSED_3,   // 3
-    CHANMUX_CHANNEL_UNUSED_4,   // 4
-    CHANMUX_CHANNEL_UNUSED_5,   // 5
-    CHANMUX_CHANNEL_NVM,        // 6
+#define CHANMUX_CHANNEL_NVM         6
 
-    CHANMUX_NUM_CHANNELS        // 7
-};
+
+//-----------------------------------------------------------------------------
+// ChanMUX clients
+//-----------------------------------------------------------------------------
+
+#define CHANMUX_ID_CRYPTOSERVER     101
 
 
 //-----------------------------------------------------------------------------
@@ -100,6 +96,9 @@ enum
 //-----------------------------------------------------------------------------
 // PARTITION MANAGER
 //-----------------------------------------------------------------------------
+
+#if !defined(CAMKES_TOOL_PROCESSING)
+
 typedef struct
 {
     const char *partition_name;
@@ -129,6 +128,8 @@ static const Partition_cat_t partition_conf = {
     .partition[4].partition_size = 0x7D000,
     .partition[4].block_size = 512
 };
+
+#endif // !defined(CAMKES_TOOL_PROCESSING)
 
 // internal defines
 #define PM_CONF_ARRAY_SIZE(x)                   (sizeof(x)/sizeof(x[0]))

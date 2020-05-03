@@ -1,0 +1,15 @@
+/*
+ *  ChanMUX upper interfaces
+ *
+ *  Copyright (C) 2020, Hensoldt Cyber GmbH
+ *
+ *
+ *  The file components/ChanMux/ChanMux.camkes from the generic ChanMux CAmkES
+ *  component will include this
+ *
+ */
+
+//-------------------------------------------------
+// upper interface to cryptoServer
+dataport  Buf                 cryptoServer_port;
+emits     DataAvailableEvent  cryptoServer_event_hasData;

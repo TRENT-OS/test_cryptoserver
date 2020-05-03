@@ -6,17 +6,30 @@ import <std_connector.camkes>;
 
 import <CryptoServer/camkes/CryptoServer.camkes>;
 
-import "components/ChanMux/ChanMux.camkes";
 import "components/Uart/Uart.camkes";
 
 import "components/Tests/test_CryptoServer_access.camkes";
 import "components/Tests/test_CryptoServer.camkes";
 
+#include "system_config.h"
+
+#define CHANMUX_COMPONENT_NAME  ChanMux
+#define CHANMUX_UPPER_INTERFACES "components/ChanMux/ChanMux_upper_interface.camkes"
+#include "ChanMux/ChanMux.camkes"
+
+
 assembly {
     composition {
-        component   ChanMux                     chanMux;
         component   UartDev                     uartDev;
         component   UartDrv                     uartDrv;
+        connection  seL4HardwareMMIO    mmio_0      ( from uartDrv.uartRegBase,
+                                                      to uartDev.uartRegBase );
+
+        DECLARE_AND_CONNECT_INSTANCE_CHANMUX(
+            ChanMux, chanMux,
+            uartDrv.UartDrv, uartDrv.inputDataPort,
+            uartDrv.Output)
+
         component   CryptoServer                cryptoServer;
         component   test_CryptoServer_access_0  accessTest_0;
         component   test_CryptoServer_access_1  accessTest_1;
@@ -24,23 +37,13 @@ assembly {
         component   test_CryptoServer_access_3  accessTest_3;
         component   test_CryptoServer           unitTest;
 
-        // ChanMux <-> UART
-        connection  seL4RPCCall         call_0      ( from chanMux.Output,
-                                                      to uartDrv.UartDrv );
-        connection  seL4RPCCall         call_1      ( from uartDrv.Output,
-                                                      to chanMux.ChanMuxOut );
-        connection  seL4SharedData      shared_0    ( from chanMux.outputDataPort,
-                                                      to uartDrv.inputDataPort );
-        connection  seL4HardwareMMIO    mmio_0      ( from uartDrv.uartRegBase,
-                                                      to uartDev.uartRegBase );
-
         // CryptoServer <-> ChanMux
-        connection  seL4RPCCall         call_2      ( from cryptoServer.ChanMuxRpc,
-                                                      to chanMux.ChanMuxIn );
-        connection  seL4SharedData      shared_1    ( from cryptoServer.chanMuxDataPort,
-                                                      to chanMux.dataPort );
-        connection  seL4Notification    note_0      ( from chanMux.dataAvailable,
-                                                      to cryptoServer.ChanMuxSignal_dataAvailable );
+        connection  seL4RPCCall         call_2      ( from cryptoServer.chanMux_rpc,
+                                                      to chanMux.chanMux_rpc );
+        connection  seL4SharedData      shared_1    ( from cryptoServer.chanMux_port,
+                                                      to chanMux.cryptoServer_port );
+        connection  seL4Notification    note_0      ( from chanMux.cryptoServer_event_hasData,
+                                                      to cryptoServer.chanMux_event_hasData );
 
         // test_CryptoServer_access_0 <-> CryptoServer::CryptoAPI RPC
         connection  seL4RPCCall         call_3      ( from accessTest_0.CryptoLibServer,
@@ -93,6 +96,10 @@ assembly {
         uartDev.uartRegBase_paddr  = 0xE0000000;
         uartDev.uartRegBase_size   = 0x1000;
         uartDrv.inputDataPort      = "R";
+
+        // assign endpoint badges for n:1 RPC interface of ChanMUX. The generic
+        // naming scheme is <component>.<interface>_attributes = <badge ID>
+        cryptoServer.chanMux_rpc_attributes = CHANMUX_ID_CRYPTOSERVER;
 
         // When assigning IDs for each app, we need to ensure that they have the
         // SAME ID on both interfaces; the CryptoServer IF will be used to init
