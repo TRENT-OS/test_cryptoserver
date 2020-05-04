@@ -101,8 +101,6 @@ int run()
     OS_Crypto_Config_t cfgClient =
     {
         .mode = OS_Crypto_MODE_CLIENT_ONLY,
-        .mem.malloc = malloc,
-        .mem.free = free,
         .rpc.client.dataPort = CryptoLibDataport
     };
 
