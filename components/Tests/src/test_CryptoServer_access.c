@@ -54,7 +54,7 @@ test_CryptoServer_access(
 {
     OS_CryptoKey_Handle_t hKey;
     char name[16];
-    size_t id, my_id = CLIENT_ID;
+    seL4_Word id, my_id = CLIENT_ID;
 
     TEST_START(my_id);
 
