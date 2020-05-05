@@ -58,7 +58,7 @@ test_CryptoServer_access(
 
     TEST_START(my_id);
 
-    snprintf(name, sizeof(name), "KEY_%i", my_id);
+    snprintf(name, sizeof(name), "KEY_%lu", (long unsigned int) my_id);
 
     // Import key into RPC server and store it, then free it
     TEST_SUCCESS(OS_CryptoKey_import(&hKey, hCrypto, &rsaPrvData));
@@ -78,7 +78,7 @@ test_CryptoServer_access(
     // keys of all instances with a greater ID, i.e., ID=0 has most access.
     for (id = 0; id < NUM_INSTANCES; id++)
     {
-        snprintf(name, sizeof(name), "KEY_%i", id);
+        snprintf(name, sizeof(name), "KEY_%lu", (long unsigned int) id);
         if (id >= my_id)
         {
             // We don't really need the key so get rid of it -- this is just to
