@@ -95,12 +95,8 @@ DeclareCAmkESComponent(test_CryptoServer
         seos_crypto_with_rpc_client
 )
 
-DeclareCAmkESComponent(UartDrv
-    SOURCES
-        components/Uart/src/UartDrv.c
-        components/Uart/src/qemu_uart.c
-    C_FLAGS
-        -Wall -Werror
+DeclareCAmkESComponent_UART(
+    UART
 )
 
 DeclareCAmkESComponent_ChanMux(
