@@ -11,7 +11,6 @@ os_set_config_file(system_config.h)
 os_use_libs(
     OS_LIBS
     OS_CHANMUX
-    OS_CRYPTO_WITH_RPC_CLIENT
 )
 
 project(system_config C)
@@ -21,11 +20,9 @@ target_include_directories(${PROJECT_NAME} INTERFACE ${CMAKE_CURRENT_LIST_DIR})
 
 project(test_cryptoserver C)
 
-# Set path to src, inc, camkes folders of CryptoServer
-SET(OS_COMPONENTS_CRYPTOSERVER_DIR "${OS_COMPONENTS_DIR}/CryptoServer")
-
-# Include CryptoServer CMakeList
-include("${OS_COMPONENTS_CRYPTOSERVER_DIR}/CMakeLists.txt")
+DeclareCAmkESComponent_CryptoServer(
+    CryptoServer
+)
 
 DeclareCAmkESComponent(test_CryptoServer_access_0
     INCLUDES
@@ -39,7 +36,7 @@ DeclareCAmkESComponent(test_CryptoServer_access_0
     LIBS
         seos_core_api
         seos_libs
-        seos_crypto_with_rpc_client
+        CryptoServer_client
 )
 
 DeclareCAmkESComponent(test_CryptoServer_access_1
@@ -54,7 +51,7 @@ DeclareCAmkESComponent(test_CryptoServer_access_1
     LIBS
         seos_core_api
         seos_libs
-        seos_crypto_with_rpc_client
+        CryptoServer_client
 )
 
 DeclareCAmkESComponent(test_CryptoServer_access_2
@@ -69,7 +66,7 @@ DeclareCAmkESComponent(test_CryptoServer_access_2
     LIBS
         seos_core_api
         seos_libs
-        seos_crypto_with_rpc_client
+        CryptoServer_client
 )
 
 DeclareCAmkESComponent(test_CryptoServer_access_3
@@ -84,7 +81,7 @@ DeclareCAmkESComponent(test_CryptoServer_access_3
     LIBS
         seos_core_api
         seos_libs
-        seos_crypto_with_rpc_client
+        CryptoServer_client
 )
 
 DeclareCAmkESComponent(test_CryptoServer
@@ -98,7 +95,7 @@ DeclareCAmkESComponent(test_CryptoServer
     LIBS
         seos_core_api
         seos_libs
-        seos_crypto_with_rpc_client
+        CryptoServer_client
 )
 
 DeclareCAmkESComponent_UART(
