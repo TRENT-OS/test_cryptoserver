@@ -3,9 +3,9 @@ cmake_minimum_required(VERSION 3.7.2)
 seos_set_config_file(system_config.h)
 
 seos_use_libs(
-    SEOS_LIBS
-    SEOS_CHANMUX
-    SEOS_CRYPTO_WITH_RPC_CLIENT
+    OS_LIBS
+    OS_CHANMUX
+    OS_CRYPTO_WITH_RPC_CLIENT
 )
 
 project(system_config C)
@@ -16,14 +16,14 @@ target_include_directories(${PROJECT_NAME} INTERFACE ${CMAKE_CURRENT_LIST_DIR})
 project(test_cryptoserver C)
 
 # Set path to src, inc, camkes folders of CryptoServer
-SET(SEOS_COMPONENTS_CRYPTOSERVER_DIR "${SEOS_COMPONENTS_DIR}/CryptoServer")
+SET(OS_COMPONENTS_CRYPTOSERVER_DIR "${OS_COMPONENTS_DIR}/CryptoServer")
 
 # Include CryptoServer CMakeList
-include("${SEOS_COMPONENTS_CRYPTOSERVER_DIR}/CMakeLists.txt")
+include("${OS_COMPONENTS_CRYPTOSERVER_DIR}/CMakeLists.txt")
 
 DeclareCAmkESComponent(test_CryptoServer_access_0
     INCLUDES
-        ${SEOS_COMPONENTS_CRYPTOSERVER_DIR}/inc
+        ${OS_COMPONENTS_CRYPTOSERVER_DIR}/inc
     SOURCES
         components/Tests/src/test_CryptoServer_access.c
     C_FLAGS
@@ -38,7 +38,7 @@ DeclareCAmkESComponent(test_CryptoServer_access_0
 
 DeclareCAmkESComponent(test_CryptoServer_access_1
     INCLUDES
-        ${SEOS_COMPONENTS_CRYPTOSERVER_DIR}/inc
+        ${OS_COMPONENTS_CRYPTOSERVER_DIR}/inc
     SOURCES
         components/Tests/src/test_CryptoServer_access.c
     C_FLAGS
@@ -53,7 +53,7 @@ DeclareCAmkESComponent(test_CryptoServer_access_1
 
 DeclareCAmkESComponent(test_CryptoServer_access_2
     INCLUDES
-        ${SEOS_COMPONENTS_CRYPTOSERVER_DIR}/inc
+        ${OS_COMPONENTS_CRYPTOSERVER_DIR}/inc
     SOURCES
         components/Tests/src/test_CryptoServer_access.c
     C_FLAGS
@@ -68,7 +68,7 @@ DeclareCAmkESComponent(test_CryptoServer_access_2
 
 DeclareCAmkESComponent(test_CryptoServer_access_3
     INCLUDES
-        ${SEOS_COMPONENTS_CRYPTOSERVER_DIR}/inc
+        ${OS_COMPONENTS_CRYPTOSERVER_DIR}/inc
     SOURCES
         components/Tests/src/test_CryptoServer_access.c
     C_FLAGS
@@ -83,7 +83,7 @@ DeclareCAmkESComponent(test_CryptoServer_access_3
 
 DeclareCAmkESComponent(test_CryptoServer
     INCLUDES
-        ${SEOS_COMPONENTS_CRYPTOSERVER_DIR}/inc
+        ${OS_COMPONENTS_CRYPTOSERVER_DIR}/inc
     SOURCES
         components/Tests/src/test_CryptoServer.c
     C_FLAGS
