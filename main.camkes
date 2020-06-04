@@ -91,7 +91,10 @@ assembly {
     }
 
     configuration{
-        CONFIGURE_INSTANCE_UART(uartDrv, 0xE0000000, 59)
+        CONFIGURE_INSTANCE_UART(
+            uartDrv,
+            CFG_CHANMUX_DEFAULT_UART_PHYS_ADDR,
+            CFG_CHANMUX_DEFAULT_UART_INTR)
 
         // assign endpoint badges for n:1 RPC interface of ChanMUX. The generic
         // naming scheme is <component>.<interface>_attributes = <badge ID>
