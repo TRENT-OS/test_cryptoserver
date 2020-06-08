@@ -10,6 +10,11 @@
 #include <camkes.h>
 #include <string.h>
 
+static OS_Crypto_Config_t cfgClient =
+{
+    .mode = OS_Crypto_MODE_CLIENT_ONLY,
+    .dataport = OS_DATAPORT_ASSIGN(CryptoLibDataport)
+};
 static OS_CryptoKey_Data_t aesData =
 {
     .type = OS_CryptoKey_TYPE_AES,
@@ -208,11 +213,6 @@ int run()
 {
     OS_Crypto_Handle_t hCrypto;
     size_t bytesWritten;
-    OS_Crypto_Config_t cfgClient =
-    {
-        .mode = OS_Crypto_MODE_CLIENT_ONLY,
-        .rpc.client.dataPort = CryptoLibDataport
-    };
 
     TEST_SUCCESS(OS_Crypto_init(&hCrypto, &cfgClient));
 

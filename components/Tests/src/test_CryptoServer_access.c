@@ -11,6 +11,11 @@
 #include <string.h>
 #include <sel4/sel4.h> // needed for seL4_yield()
 
+static OS_Crypto_Config_t cfgClient =
+{
+    .mode = OS_Crypto_MODE_CLIENT_ONLY,
+    .dataport = OS_DATAPORT_ASSIGN(CryptoLibDataport)
+};
 static OS_CryptoKey_Data_t rsaPrvData =
 {
     .type = OS_CryptoKey_TYPE_RSA_PRV,
@@ -98,11 +103,6 @@ test_CryptoServer_access(
 int run()
 {
     OS_Crypto_Handle_t hCrypto;
-    OS_Crypto_Config_t cfgClient =
-    {
-        .mode = OS_Crypto_MODE_CLIENT_ONLY,
-        .rpc.client.dataPort = CryptoLibDataport
-    };
 
     TEST_SUCCESS(OS_Crypto_init(&hCrypto, &cfgClient));
 
