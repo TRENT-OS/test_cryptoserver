@@ -156,8 +156,8 @@ test_CryptoServer_useKey(
 
     // Use newly loaded and re-imported key for some crypto
     TEST_SUCCESS(OS_CryptoCipher_init(&hCipher, hCrypto, hKey,
-                                           OS_CryptoCipher_ALG_AES_ECB_ENC,
-                                           NULL, 0));
+                                      OS_CryptoCipher_ALG_AES_ECB_ENC,
+                                      NULL, 0));
     TEST_SUCCESS(OS_CryptoCipher_process(hCipher, buf, ptLen, buf, &ctLen));
     Debug_ASSERT(ctLen == ptLen);
     Debug_ASSERT(!memcmp(buf, ct, ptLen));
