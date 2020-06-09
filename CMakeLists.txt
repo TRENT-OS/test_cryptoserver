@@ -34,8 +34,8 @@ DeclareCAmkESComponent(test_CryptoServer_access_0
         -DCLIENT_ID=0
         -DNUM_INSTANCES=4
     LIBS
-        seos_core_api
-        seos_libs
+        os_core_api
+        os_libs
         CryptoServer_client
 )
 
@@ -49,8 +49,8 @@ DeclareCAmkESComponent(test_CryptoServer_access_1
         -DCLIENT_ID=1
         -DNUM_INSTANCES=4
     LIBS
-        seos_core_api
-        seos_libs
+        os_core_api
+        os_libs
         CryptoServer_client
 )
 
@@ -64,8 +64,8 @@ DeclareCAmkESComponent(test_CryptoServer_access_2
         -DCLIENT_ID=2
         -DNUM_INSTANCES=4
     LIBS
-        seos_core_api
-        seos_libs
+        os_core_api
+        os_libs
         CryptoServer_client
 )
 
@@ -79,8 +79,8 @@ DeclareCAmkESComponent(test_CryptoServer_access_3
         -DCLIENT_ID=3
         -DNUM_INSTANCES=4
     LIBS
-        seos_core_api
-        seos_libs
+        os_core_api
+        os_libs
         CryptoServer_client
 )
 
@@ -93,8 +93,8 @@ DeclareCAmkESComponent(test_CryptoServer
         -Wall -Werror
         -DCLIENT_ID=4
     LIBS
-        seos_core_api
-        seos_libs
+        os_core_api
+        os_libs
         CryptoServer_client
 )
 
