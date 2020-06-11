@@ -29,8 +29,6 @@ DeclareCAmkESComponent_CryptoServer(
 
 DeclareCAmkESComponent(
     test_CryptoServer_access_0
-    INCLUDES
-        ${OS_COMPONENTS_CRYPTOSERVER_DIR}/inc
     SOURCES
         components/Tests/src/test_CryptoServer_access.c
     C_FLAGS
@@ -46,8 +44,6 @@ DeclareCAmkESComponent(
 
 DeclareCAmkESComponent(
     test_CryptoServer_access_1
-    INCLUDES
-        ${OS_COMPONENTS_CRYPTOSERVER_DIR}/inc
     SOURCES
         components/Tests/src/test_CryptoServer_access.c
     C_FLAGS
@@ -63,8 +59,6 @@ DeclareCAmkESComponent(
 
 DeclareCAmkESComponent(
     test_CryptoServer_access_2
-    INCLUDES
-        ${OS_COMPONENTS_CRYPTOSERVER_DIR}/inc
     SOURCES
         components/Tests/src/test_CryptoServer_access.c
     C_FLAGS
@@ -80,8 +74,6 @@ DeclareCAmkESComponent(
 
 DeclareCAmkESComponent(
     test_CryptoServer_access_3
-    INCLUDES
-        ${OS_COMPONENTS_CRYPTOSERVER_DIR}/inc
     SOURCES
         components/Tests/src/test_CryptoServer_access.c
     C_FLAGS
@@ -97,8 +89,6 @@ DeclareCAmkESComponent(
 
 DeclareCAmkESComponent(
     test_CryptoServer
-    INCLUDES
-        ${OS_COMPONENTS_CRYPTOSERVER_DIR}/inc
     SOURCES
         components/Tests/src/test_CryptoServer.c
     C_FLAGS
