@@ -13,24 +13,29 @@ os_use_libs(
     OS_CHANMUX
 )
 
+
+#-------------------------------------------------------------------------------
 project(system_config C)
 add_library(${PROJECT_NAME} INTERFACE)
 target_include_directories(${PROJECT_NAME} INTERFACE ${CMAKE_CURRENT_LIST_DIR})
 
 
+#-------------------------------------------------------------------------------
 project(test_cryptoserver C)
 
 DeclareCAmkESComponent_CryptoServer(
     CryptoServer
 )
 
-DeclareCAmkESComponent(test_CryptoServer_access_0
+DeclareCAmkESComponent(
+    test_CryptoServer_access_0
     INCLUDES
         ${OS_COMPONENTS_CRYPTOSERVER_DIR}/inc
     SOURCES
         components/Tests/src/test_CryptoServer_access.c
     C_FLAGS
-        -Wall -Werror
+        -Wall
+        -Werror
         -DCLIENT_ID=0
         -DNUM_INSTANCES=4
     LIBS
@@ -39,13 +44,15 @@ DeclareCAmkESComponent(test_CryptoServer_access_0
         CryptoServer_client
 )
 
-DeclareCAmkESComponent(test_CryptoServer_access_1
+DeclareCAmkESComponent(
+    test_CryptoServer_access_1
     INCLUDES
         ${OS_COMPONENTS_CRYPTOSERVER_DIR}/inc
     SOURCES
         components/Tests/src/test_CryptoServer_access.c
     C_FLAGS
-        -Wall -Werror
+        -Wall
+        -Werror
         -DCLIENT_ID=1
         -DNUM_INSTANCES=4
     LIBS
@@ -54,13 +61,15 @@ DeclareCAmkESComponent(test_CryptoServer_access_1
         CryptoServer_client
 )
 
-DeclareCAmkESComponent(test_CryptoServer_access_2
+DeclareCAmkESComponent(
+    test_CryptoServer_access_2
     INCLUDES
         ${OS_COMPONENTS_CRYPTOSERVER_DIR}/inc
     SOURCES
         components/Tests/src/test_CryptoServer_access.c
     C_FLAGS
-        -Wall -Werror
+        -Wall
+        -Werror
         -DCLIENT_ID=2
         -DNUM_INSTANCES=4
     LIBS
@@ -69,13 +78,15 @@ DeclareCAmkESComponent(test_CryptoServer_access_2
         CryptoServer_client
 )
 
-DeclareCAmkESComponent(test_CryptoServer_access_3
+DeclareCAmkESComponent(
+    test_CryptoServer_access_3
     INCLUDES
         ${OS_COMPONENTS_CRYPTOSERVER_DIR}/inc
     SOURCES
         components/Tests/src/test_CryptoServer_access.c
     C_FLAGS
-        -Wall -Werror
+        -Wall
+        -Werror
         -DCLIENT_ID=3
         -DNUM_INSTANCES=4
     LIBS
@@ -84,13 +95,15 @@ DeclareCAmkESComponent(test_CryptoServer_access_3
         CryptoServer_client
 )
 
-DeclareCAmkESComponent(test_CryptoServer
+DeclareCAmkESComponent(
+    test_CryptoServer
     INCLUDES
         ${OS_COMPONENTS_CRYPTOSERVER_DIR}/inc
     SOURCES
         components/Tests/src/test_CryptoServer.c
     C_FLAGS
-        -Wall -Werror
+        -Wall
+        -Werror
         -DCLIENT_ID=4
     LIBS
         os_core_api
@@ -107,6 +120,7 @@ DeclareCAmkESComponent_ChanMux(
     components/ChanMux/ChanMux_config.c
     system_config
 )
+
 
 DeclareAndCreateCamkESSystem(main.camkes)
 GenerateSimulateScript()
