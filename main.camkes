@@ -28,10 +28,7 @@ assembly {
         DECLARE_AND_CONNECT_INSTANCE_UART(
             UART, uartDrv)
 
-        DECLARE_AND_CONNECT_INSTANCE_CHANMUX(
-            ChanMux, chanMux,
-            uartDrv.UartDrv, uartDrv.inputDataPort,
-            uartDrv.Output)
+        DECLARE_AND_CONNECT_INSTANCE_CHANMUX_TO_UART(ChanMux, chanMux, uartDrv)
 
         component   CryptoServer                cryptoServer;
         component   test_CryptoServer_access_0  accessTest_0;
