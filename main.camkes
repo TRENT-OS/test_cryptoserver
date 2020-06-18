@@ -4,6 +4,8 @@
 
 import <std_connector.camkes>;
 
+import <if_OS_EntropySource.camkes>;
+
 import <CryptoServer/camkes/CryptoServer.camkes>;
 
 import "components/Tests/test_CryptoServer_access.camkes";
@@ -18,6 +20,8 @@ DECLARE_COMPONENT_UART(UART)
 #define CHANMUX_UPPER_INTERFACES "components/ChanMux/ChanMux_upper_interface.camkes"
 #include "ChanMux/ChanMux.camkes"
 
+#include "EntropySource/camkes/EntropySource.camkes"
+DECLARE_COMPONENT_EntropySource(EntropySource)
 
 assembly {
     composition {
@@ -35,6 +39,12 @@ assembly {
         component   test_CryptoServer_access_2  accessTest_2;
         component   test_CryptoServer_access_3  accessTest_3;
         component   test_CryptoServer           unitTest;
+
+        DECLARE_AND_CONNECT_INSTANCE_EntropySource(
+            EntropySource,
+            entropySource,
+            cryptoServer.entropySource_rpc,
+            cryptoServer.entropySource_dp)
 
         // CryptoServer <-> ChanMux
         connection  seL4RPCCall         call_2      ( from cryptoServer.chanMux_rpc,
