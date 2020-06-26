@@ -32,9 +32,9 @@ resolveChannel(
 
 //------------------------------------------------------------------------------
 static uint8_t client_fifo_buffer[PAGE_SIZE];
-static ChanMux_channel_t client_channel;
+static ChanMux_Channel_t client_channel;
 
-static const ChanMux_channel_ctx_t channelCtx[] = {
+static const ChanMux_ChannelCtx_t channelCtx[] = {
     CHANMUX_CHANNEL_CTX(
         CHANMUX_CHANNEL_NVM,
         &client_channel,
@@ -44,7 +44,7 @@ static const ChanMux_channel_ctx_t channelCtx[] = {
 };
 
 
-const ChanMux_config_t cfgChanMux =
+const ChanMux_Config_t cfgChanMux =
 {
     .resolveChannel = &resolveChannel,
     .numChannels    = ARRAY_SIZE(channelCtx),
