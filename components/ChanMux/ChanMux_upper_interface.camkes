@@ -8,8 +8,8 @@
  *  component will include this
  *
  */
+#include "ChanMux/ChanMuxHelper.camkes"
 
 //-------------------------------------------------
 // upper interface to cryptoServer
-dataport  Buf                 cryptoServer_port;
-emits     DataAvailableEvent  cryptoServer_event_hasData;
+DECLARE_CHANMUX_CHANNEL_INTERFACE(cryptoServer, chan)

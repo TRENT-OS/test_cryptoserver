@@ -44,12 +44,8 @@ assembly {
             cryptoServer.entropySource_dp)
 
         // CryptoServer <-> ChanMux
-        connection  seL4RPCCall         call_2      ( from cryptoServer.chanMux_rpc,
-                                                      to chanMux.chanMux_rpc );
-        connection  seL4SharedData      shared_1    ( from cryptoServer.chanMux_port,
-                                                      to chanMux.cryptoServer_port );
-        connection  seL4Notification    note_0      ( from chanMux.cryptoServer_event_hasData,
-                                                      to cryptoServer.chanMux_event_hasData );
+        CHANMUX_INSTANCE_CONNECT_INTERFACE(chanMux, cryptoServer)
+        CHANMUX_INSTANCE_CONNECT_CHANNEL(chanMux, cryptoServer, chan)
 
         // test_CryptoServer_access_0 <-> CryptoServer::CryptoAPI RPC
         connection  seL4RPCCall         call_3      ( from accessTest_0.CryptoLibServer,
@@ -105,7 +101,7 @@ assembly {
 
         // assign endpoint badges for n:1 RPC interface of ChanMUX. The generic
         // naming scheme is <component>.<interface>_attributes = <badge ID>
-        cryptoServer.chanMux_rpc_attributes = CHANMUX_ID_CRYPTOSERVER;
+        CHANMUX_ASSIGN_CLIENT_BADGE(chanMux, cryptoServer, CHANMUX_ID_CRYPTOSERVER)
 
         // When assigning IDs for each app, we need to ensure that they have the
         // SAME ID on both interfaces; the CryptoServer IF will be used to init
