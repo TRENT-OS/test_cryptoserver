@@ -13,23 +13,14 @@ import "components/Tests/test_CryptoServer.camkes";
 
 #include "system_config.h"
 
-#include "UART/Uart.camkes"
-DECLARE_COMPONENT_UART(UART)
-
-#define CHANMUX_COMPONENT_NAME  ChanMux
-#define CHANMUX_UPPER_INTERFACES "components/ChanMux/ChanMux_upper_interface.camkes"
-#include "ChanMux/ChanMux.camkes"
-
 #include "EntropySource/camkes/EntropySource.camkes"
 DECLARE_COMPONENT_EntropySource(EntropySource)
 
+#include "RamDisk/RamDisk.camkes"
+DECLARE_COMPONENT_RamDisk(RamDisk)
+
 assembly {
     composition {
-        DECLARE_AND_CONNECT_INSTANCE_UART(
-            UART, uartDrv)
-
-        DECLARE_AND_CONNECT_INSTANCE_CHANMUX_TO_UART(ChanMux, chanMux, uartDrv)
-
         component   CryptoServer                cryptoServer;
         component   test_CryptoServer_access_0  accessTest_0;
         component   test_CryptoServer_access_1  accessTest_1;
@@ -43,9 +34,11 @@ assembly {
             cryptoServer.entropySource_rpc,
             cryptoServer.entropySource_dp)
 
-        // CryptoServer <-> ChanMux
-        CHANMUX_INSTANCE_CONNECT_INTERFACE(chanMux, cryptoServer)
-        CHANMUX_INSTANCE_CONNECT_CHANNEL(chanMux, cryptoServer, chan)
+        // CryptoServer <-> Storage
+        DECLARE_AND_CONNECT_INSTANCE_RamDisk(
+          RamDisk, ramDisk,
+          cryptoServer.storage_rpc,
+          cryptoServer.storage_dp)
 
         // test_CryptoServer_access_0 <-> CryptoServer::CryptoAPI RPC
         connection  seL4RPCCall         call_3      ( from accessTest_0.CryptoLibServer,
@@ -94,15 +87,6 @@ assembly {
     }
 
     configuration{
-        CONFIGURE_INSTANCE_UART(
-            uartDrv,
-            CFG_CHANMUX_DEFAULT_UART_PHYS_ADDR,
-            CFG_CHANMUX_DEFAULT_UART_INTR)
-
-        // assign endpoint badges for n:1 RPC interface of ChanMUX. The generic
-        // naming scheme is <component>.<interface>_attributes = <badge ID>
-        CHANMUX_ASSIGN_CLIENT_BADGE(chanMux, cryptoServer, CHANMUX_ID_CRYPTOSERVER)
-
         // When assigning IDs for each app, we need to ensure that they have the
         // SAME ID on both interfaces; the CryptoServer IF will be used to init
         // crypto and keystore contexts, the CryptoLibServer IF will be used

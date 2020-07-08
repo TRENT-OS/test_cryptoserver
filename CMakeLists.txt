@@ -96,18 +96,13 @@ DeclareCAmkESComponent(
         CryptoServer_client
 )
 
-DeclareCAmkESComponent_UART(
-    UART
-)
-
-DeclareCAmkESComponent_ChanMux(
-    ChanMux
-    components/ChanMux/ChanMux_config.c
-    system_config
-)
-
 DeclareCAmkESComponent_EntropySource(
     EntropySource
+)
+
+DeclareCAmkESComponent_RamDisk(
+    RamDisk
+    system_config
 )
 
 DeclareAndCreateCamkESSystem(main.camkes)
