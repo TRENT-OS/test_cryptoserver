@@ -102,16 +102,25 @@ test_CryptoServer_access(
 
 int run()
 {
+    OS_Error_t err;
     OS_Crypto_Handle_t hCrypto;
 
-    TEST_SUCCESS(OS_Crypto_init(&hCrypto, &cfgClient));
+    if ((err = OS_Crypto_init(&hCrypto, &cfgClient)) != OS_SUCCESS)
+    {
+        Debug_LOG_ERROR("OS_Crypto_init() failed with %i", err);
+        return -1;
+    }
 
     // This test checks that the CryptoServer respects access rights configured
     // for multiple instances of clients (based on this code) trying to access each
     // other's keystores.
     test_CryptoServer_access(hCrypto);
 
-    TEST_SUCCESS(OS_Crypto_free(hCrypto));
+    if ((err = OS_Crypto_free(hCrypto)) != OS_SUCCESS)
+    {
+        Debug_LOG_ERROR("OS_Crypto_free() failed with %i", err);
+        return -1;
+    }
 
     return 0;
 }
