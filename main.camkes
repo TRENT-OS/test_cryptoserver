@@ -6,12 +6,13 @@ import <std_connector.camkes>;
 
 import <if_OS_EntropySource.camkes>;
 
-import <CryptoServer/camkes/CryptoServer.camkes>;
-
 import "components/Tests/test_CryptoServer_access.camkes";
 import "components/Tests/test_CryptoServer.camkes";
 
 #include "system_config.h"
+
+#include "CryptoServer/camkes/CryptoServer.camkes"
+DECLARE_COMPONENT_CryptoServer(CryptoServer)
 
 #include "EntropySource/camkes/EntropySource.camkes"
 DECLARE_COMPONENT_EntropySource(EntropySource)
@@ -21,94 +22,43 @@ DECLARE_COMPONENT_RamDisk(RamDisk)
 
 assembly {
     composition {
-        component   CryptoServer                cryptoServer;
         component   test_CryptoServer_access_0  accessTest_0;
         component   test_CryptoServer_access_1  accessTest_1;
         component   test_CryptoServer_access_2  accessTest_2;
         component   test_CryptoServer_access_3  accessTest_3;
         component   test_CryptoServer           unitTest;
 
-        DECLARE_AND_CONNECT_INSTANCE_EntropySource(
-            EntropySource,
-            entropySource,
-            cryptoServer.entropySource_rpc,
-            cryptoServer.entropySource_dp)
+        component RamDisk ramDisk;
+        component EntropySource entropySource;
 
-        // CryptoServer <-> Storage
-        DECLARE_AND_CONNECT_INSTANCE_RamDisk(
-          RamDisk, ramDisk,
-          cryptoServer.storage_rpc,
-          cryptoServer.storage_dp)
-
-        // test_CryptoServer_access_0 <-> CryptoServer::CryptoAPI RPC
-        connection  seL4RPCCall         call_3      ( from accessTest_0.CryptoLibServer,
-                                                      to cryptoServer.CryptoLibServer );
-        connection  seL4SharedData      shared_2    ( from accessTest_0.CryptoLibDataport,
-                                                      to cryptoServer.CryptoLibDataport );
-        // test_CryptoServer_access_0 <-> CryptoServer::CryptoServer RPC
-        connection  seL4RPCCall         call_4      ( from accessTest_0.CryptoServer,
-                                                      to cryptoServer.CryptoServer );
-
-        // test_CryptoServer_access_1 <-> CryptoServer::CryptoAPI RPC
-        connection  seL4RPCCall         call_5      ( from accessTest_1.CryptoLibServer,
-                                                      to cryptoServer.CryptoLibServer );
-        connection  seL4SharedData      shared_3    ( from accessTest_1.CryptoLibDataport,
-                                                      to cryptoServer.CryptoLibDataport );
-        // test_CryptoServer_access_1 <-> CryptoServer::CryptoServer RPC
-        connection  seL4RPCCall         call_6      ( from accessTest_1.CryptoServer,
-                                                      to cryptoServer.CryptoServer );
-
-        // test_CryptoServer_access_2 <-> CryptoServer::CryptoAPI RPC
-        connection  seL4RPCCall         call_7      ( from accessTest_2.CryptoLibServer,
-                                                      to cryptoServer.CryptoLibServer );
-        connection  seL4SharedData      shared_4    ( from accessTest_2.CryptoLibDataport,
-                                                      to cryptoServer.CryptoLibDataport );
-        // test_CryptoServer_access_2 <-> CryptoServer::CryptoServer RPC
-        connection  seL4RPCCall         call_8      ( from accessTest_2.CryptoServer,
-                                                      to cryptoServer.CryptoServer );
-
-        // test_CryptoServer_access_3 <-> CryptoServer::CryptoAPI RPC
-        connection  seL4RPCCall         call_9      ( from accessTest_3.CryptoLibServer,
-                                                      to cryptoServer.CryptoLibServer );
-        connection  seL4SharedData      shared_5    ( from accessTest_3.CryptoLibDataport,
-                                                      to cryptoServer.CryptoLibDataport );
-        // test_CryptoServer_access_3 <-> CryptoServer::CryptoServer RPC
-        connection  seL4RPCCall         call_10     ( from accessTest_3.CryptoServer,
-                                                      to cryptoServer.CryptoServer );
-
-        // unitTest <-> CryptoServer::CryptoAPI RPC
-        connection  seL4RPCCall         call_11     ( from unitTest.CryptoLibServer,
-                                                       to cryptoServer.CryptoLibServer );
-        connection  seL4SharedData      shared_6    ( from unitTest.CryptoLibDataport,
-                                                      to cryptoServer.CryptoLibDataport );
-        // unitTest <-> CryptoServer::CryptoServer RPC
-        connection  seL4RPCCall         call_12     ( from unitTest.CryptoServer,
-                                                      to cryptoServer.CryptoServer );
+        DECLARE_AND_CONNECT_INSTANCE_CryptoServer(
+            CryptoServer, cryptoServer,
+            entropySource.entropySource_rpc, entropySource.entropySource_dp,
+            ramDisk.storage_rpc, ramDisk.storage_port,
+            accessTest_0.CryptoLibServer, accessTest_0.cryptoLib_dp, accessTest_0.cryptoServer_rpc,
+            accessTest_1.CryptoLibServer, accessTest_1.cryptoLib_dp, accessTest_1.cryptoServer_rpc,
+            accessTest_2.CryptoLibServer, accessTest_2.cryptoLib_dp, accessTest_2.cryptoServer_rpc,
+            accessTest_3.CryptoLibServer, accessTest_3.cryptoLib_dp, accessTest_3.cryptoServer_rpc,
+            unitTest.CryptoLibServer,     unitTest.cryptoLib_dp,     unitTest.cryptoServer_rpc)
     }
 
     configuration{
-        // When assigning IDs for each app, we need to ensure that they have the
-        // SAME ID on both interfaces; the CryptoServer IF will be used to init
-        // crypto and keystore contexts, the CryptoLibServer IF will be used
-        // to use those -- so they MUST match!!!
-        accessTest_0.CryptoServer_attributes         = CRYPTOSERVER_ID_accessTest_0;
-        accessTest_0.CryptoLibServer_attributes      = CRYPTOSERVER_ID_accessTest_0;
+        // Assign client badge to both interfaces
+        ASSIGN_CLIENT_BADGE_CryptoServer(accessTest_0,
+          cryptoServer_rpc, CryptoLibServer, CRYPTOSERVER_ID_accessTest_0)
+        ASSIGN_CLIENT_BADGE_CryptoServer(accessTest_1,
+          cryptoServer_rpc, CryptoLibServer, CRYPTOSERVER_ID_accessTest_1)
+        ASSIGN_CLIENT_BADGE_CryptoServer(accessTest_2,
+          cryptoServer_rpc, CryptoLibServer, CRYPTOSERVER_ID_accessTest_2)
+        ASSIGN_CLIENT_BADGE_CryptoServer(accessTest_3,
+          cryptoServer_rpc, CryptoLibServer, CRYPTOSERVER_ID_accessTest_3)
+        ASSIGN_CLIENT_BADGE_CryptoServer(untitTest,
+          cryptoServer_rpc, CryptoLibServer, CRYPTOSERVER_ID_unitTest)
 
-        accessTest_1.CryptoServer_attributes         = CRYPTOSERVER_ID_accessTest_1;
-        accessTest_1.CryptoLibServer_attributes      = CRYPTOSERVER_ID_accessTest_1;
+        // Init the internal semaphore
+        INIT_SEMAPHORES_CryptoServer(cryptoServer)
 
-        accessTest_2.CryptoServer_attributes         = CRYPTOSERVER_ID_accessTest_2;
-        accessTest_2.CryptoLibServer_attributes      = CRYPTOSERVER_ID_accessTest_2;
-
-        accessTest_3.CryptoServer_attributes         = CRYPTOSERVER_ID_accessTest_3;
-        accessTest_3.CryptoLibServer_attributes      = CRYPTOSERVER_ID_accessTest_3;
-
-        unitTest.CryptoServer_attributes             = CRYPTOSERVER_ID_unitTest;
-        unitTest.CryptoLibServer_attributes          = CRYPTOSERVER_ID_unitTest;
-
-        cryptoServer.config = {
-            // Configure how many clients we have
-            "numClients":   5,
+        cryptoServer.cryptoServer_config = {
             "clients": [
                 // Keys of client 0 can be loaded by client 0
                 { "storageLimit": 1024*2,
@@ -127,8 +77,5 @@ assembly {
                    "allowedIds":  [0,0,0,0,1] },
             ]
         };
-
-        // Semaphore to sync RPC with init
-        cryptoServer.sem_init = 0;
     }
 }

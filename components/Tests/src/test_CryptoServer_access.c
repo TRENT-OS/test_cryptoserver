@@ -14,7 +14,7 @@
 static OS_Crypto_Config_t cfgClient =
 {
     .mode = OS_Crypto_MODE_CLIENT_ONLY,
-    .dataport = OS_DATAPORT_ASSIGN(CryptoLibDataport)
+    .dataport = OS_DATAPORT_ASSIGN(cryptoLib_dp)
 };
 static OS_CryptoKey_Data_t rsaPrvData =
 {
