@@ -59,19 +59,19 @@ assembly {
             "clients": [
                 // Keys of client 0 can be loaded by client 0
                 { "storageLimit": 1024*2,
-                  "allowedIds":   [1,0,0,0,0] },
+                  "allowedIds":   [0,-1,-1,-1,-1] },
                 // Keys of client 1 can be loaded by client 0, 1
                 { "storageLimit": 1024*2,
-                  "allowedIds":   [1,1,0,0,0] },
+                  "allowedIds":   [0,1,-1,-1,-1] },
                 // Keys of client 2 can be loaded by client 0, 1, 2
                 { "storageLimit": 1024*2,
-                  "allowedIds":   [1,1,1,0,0] },
+                  "allowedIds":   [0,1,2,-1,-1] },
                 // Keys of client 3 can be loaded by client 0, 1, 2, 3
                 { "storageLimit": 1024*2,
-                  "allowedIds":   [1,1,1,1,0] },
+                  "allowedIds":   [0,1,2,3,-1] },
                 // Keys of client 4 (unit test) can be loaded only by client 4
                 { "storageLimit": 1024*12,
-                   "allowedIds":  [0,0,0,0,1] },
+                   "allowedIds":  [4,-1,-1,-1,-1] },
             ]
         };
     }
