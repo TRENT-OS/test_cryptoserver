@@ -55,9 +55,6 @@ assembly {
         ASSIGN_CLIENT_BADGE_CryptoServer(untitTest,
           cryptoServer_rpc, crypto_rpc, CRYPTOSERVER_ID_unitTest)
 
-        // Init the internal semaphore
-        INIT_SEMAPHORES_CryptoServer(cryptoServer)
-
         cryptoServer.cryptoServer_config = {
             "clients": [
                 // Keys of client 0 can be loaded by client 0
