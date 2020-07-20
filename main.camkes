@@ -35,25 +35,25 @@ assembly {
             CryptoServer, cryptoServer,
             entropySource.entropySource_rpc, entropySource.entropySource_dp,
             ramDisk.storage_rpc, ramDisk.storage_port,
-            accessTest_0.CryptoLibServer, accessTest_0.cryptoLib_dp, accessTest_0.cryptoServer_rpc,
-            accessTest_1.CryptoLibServer, accessTest_1.cryptoLib_dp, accessTest_1.cryptoServer_rpc,
-            accessTest_2.CryptoLibServer, accessTest_2.cryptoLib_dp, accessTest_2.cryptoServer_rpc,
-            accessTest_3.CryptoLibServer, accessTest_3.cryptoLib_dp, accessTest_3.cryptoServer_rpc,
-            unitTest.CryptoLibServer,     unitTest.cryptoLib_dp,     unitTest.cryptoServer_rpc)
+            accessTest_0.crypto_rpc, accessTest_0.crypto_port, accessTest_0.cryptoServer_rpc,
+            accessTest_1.crypto_rpc, accessTest_1.crypto_port, accessTest_1.cryptoServer_rpc,
+            accessTest_2.crypto_rpc, accessTest_2.crypto_port, accessTest_2.cryptoServer_rpc,
+            accessTest_3.crypto_rpc, accessTest_3.crypto_port, accessTest_3.cryptoServer_rpc,
+            unitTest.crypto_rpc,     unitTest.crypto_port,     unitTest.cryptoServer_rpc)
     }
 
     configuration{
         // Assign client badge to both interfaces
         ASSIGN_CLIENT_BADGE_CryptoServer(accessTest_0,
-          cryptoServer_rpc, CryptoLibServer, CRYPTOSERVER_ID_accessTest_0)
+          cryptoServer_rpc, crypto_rpc, CRYPTOSERVER_ID_accessTest_0)
         ASSIGN_CLIENT_BADGE_CryptoServer(accessTest_1,
-          cryptoServer_rpc, CryptoLibServer, CRYPTOSERVER_ID_accessTest_1)
+          cryptoServer_rpc, crypto_rpc, CRYPTOSERVER_ID_accessTest_1)
         ASSIGN_CLIENT_BADGE_CryptoServer(accessTest_2,
-          cryptoServer_rpc, CryptoLibServer, CRYPTOSERVER_ID_accessTest_2)
+          cryptoServer_rpc, crypto_rpc, CRYPTOSERVER_ID_accessTest_2)
         ASSIGN_CLIENT_BADGE_CryptoServer(accessTest_3,
-          cryptoServer_rpc, CryptoLibServer, CRYPTOSERVER_ID_accessTest_3)
+          cryptoServer_rpc, crypto_rpc, CRYPTOSERVER_ID_accessTest_3)
         ASSIGN_CLIENT_BADGE_CryptoServer(untitTest,
-          cryptoServer_rpc, CryptoLibServer, CRYPTOSERVER_ID_unitTest)
+          cryptoServer_rpc, crypto_rpc, CRYPTOSERVER_ID_unitTest)
 
         // Init the internal semaphore
         INIT_SEMAPHORES_CryptoServer(cryptoServer)
