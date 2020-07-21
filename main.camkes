@@ -4,7 +4,7 @@
 
 import <std_connector.camkes>;
 
-import <if_OS_EntropySource.camkes>;
+import <if_OS_Entropy.camkes>;
 
 import "components/Tests/test_CryptoServer_access.camkes";
 import "components/Tests/test_CryptoServer.camkes";
