@@ -33,7 +33,7 @@ assembly {
 
         DECLARE_AND_CONNECT_INSTANCE_CryptoServer(
             CryptoServer, cryptoServer,
-            entropySource.entropySource_rpc, entropySource.entropySource_dp,
+            entropySource.entropy_rpc, entropySource.entropy_port,
             ramDisk.storage_rpc, ramDisk.storage_port,
             accessTest_0.crypto_rpc, accessTest_0.crypto_port, accessTest_0.cryptoServer_rpc,
             accessTest_1.crypto_rpc, accessTest_1.crypto_port, accessTest_1.cryptoServer_rpc,
