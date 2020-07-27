@@ -58,8 +58,8 @@
 // CryptoServer
 //-----------------------------------------------------------------------------
 
-#define CRYPTOSERVER_ID_accessTest_0    0
 #define CRYPTOSERVER_ID_accessTest_1    1
 #define CRYPTOSERVER_ID_accessTest_2    2
 #define CRYPTOSERVER_ID_accessTest_3    3
-#define CRYPTOSERVER_ID_unitTest        4
+#define CRYPTOSERVER_ID_accessTest_4    4
+#define CRYPTOSERVER_ID_unitTest        5

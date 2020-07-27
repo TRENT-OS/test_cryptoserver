@@ -23,21 +23,6 @@ DeclareCAmkESComponent_CryptoServer(
 )
 
 DeclareCAmkESComponent(
-    test_CryptoServer_access_0
-    SOURCES
-        components/Tests/src/test_CryptoServer_access.c
-    C_FLAGS
-        -Wall
-        -Werror
-        -DCLIENT_ID=0
-        -DNUM_INSTANCES=4
-    LIBS
-        os_core_api
-        os_libs
-        CryptoServer_client
-)
-
-DeclareCAmkESComponent(
     test_CryptoServer_access_1
     SOURCES
         components/Tests/src/test_CryptoServer_access.c
@@ -83,13 +68,28 @@ DeclareCAmkESComponent(
 )
 
 DeclareCAmkESComponent(
+    test_CryptoServer_access_4
+    SOURCES
+        components/Tests/src/test_CryptoServer_access.c
+    C_FLAGS
+        -Wall
+        -Werror
+        -DCLIENT_ID=4
+        -DNUM_INSTANCES=4
+    LIBS
+        os_core_api
+        os_libs
+        CryptoServer_client
+)
+
+DeclareCAmkESComponent(
     test_CryptoServer
     SOURCES
         components/Tests/src/test_CryptoServer.c
     C_FLAGS
         -Wall
         -Werror
-        -DCLIENT_ID=4
+        -DCLIENT_ID=5
     LIBS
         os_core_api
         os_libs

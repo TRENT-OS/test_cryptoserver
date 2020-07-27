@@ -81,7 +81,7 @@ test_CryptoServer_access(
     // Check the configured access matrix, see main.cakes. We have configured
     // all AccessTest instances such that they can access their own keys and the
     // keys of all instances with a greater ID, i.e., ID=0 has most access.
-    for (id = 0; id < NUM_INSTANCES; id++)
+    for (id = 1; id <= NUM_INSTANCES; id++)
     {
         snprintf(name, sizeof(name), "KEY_%lu", (long unsigned int) id);
         if (id >= my_id)

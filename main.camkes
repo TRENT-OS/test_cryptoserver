@@ -22,10 +22,10 @@ DECLARE_COMPONENT_RamDisk(RamDisk)
 
 assembly {
     composition {
-        component   test_CryptoServer_access_0  accessTest_0;
         component   test_CryptoServer_access_1  accessTest_1;
         component   test_CryptoServer_access_2  accessTest_2;
         component   test_CryptoServer_access_3  accessTest_3;
+        component   test_CryptoServer_access_4  accessTest_4;
         component   test_CryptoServer           unitTest;
 
         component RamDisk ramDisk;
@@ -35,43 +35,43 @@ assembly {
             CryptoServer, cryptoServer,
             entropySource.entropy_rpc, entropySource.entropy_port,
             ramDisk.storage_rpc, ramDisk.storage_port,
-            accessTest_0.crypto_rpc, accessTest_0.crypto_port, accessTest_0.cryptoServer_rpc,
             accessTest_1.crypto_rpc, accessTest_1.crypto_port, accessTest_1.cryptoServer_rpc,
             accessTest_2.crypto_rpc, accessTest_2.crypto_port, accessTest_2.cryptoServer_rpc,
             accessTest_3.crypto_rpc, accessTest_3.crypto_port, accessTest_3.cryptoServer_rpc,
+            accessTest_4.crypto_rpc, accessTest_4.crypto_port, accessTest_4.cryptoServer_rpc,
             unitTest.crypto_rpc,     unitTest.crypto_port,     unitTest.cryptoServer_rpc)
     }
 
     configuration{
         // Assign client badge to both interfaces
-        ASSIGN_CLIENT_BADGE_CryptoServer(accessTest_0,
-          cryptoServer_rpc, crypto_rpc, CRYPTOSERVER_ID_accessTest_0)
         ASSIGN_CLIENT_BADGE_CryptoServer(accessTest_1,
           cryptoServer_rpc, crypto_rpc, CRYPTOSERVER_ID_accessTest_1)
         ASSIGN_CLIENT_BADGE_CryptoServer(accessTest_2,
           cryptoServer_rpc, crypto_rpc, CRYPTOSERVER_ID_accessTest_2)
         ASSIGN_CLIENT_BADGE_CryptoServer(accessTest_3,
           cryptoServer_rpc, crypto_rpc, CRYPTOSERVER_ID_accessTest_3)
+        ASSIGN_CLIENT_BADGE_CryptoServer(accessTest_4,
+          cryptoServer_rpc, crypto_rpc, CRYPTOSERVER_ID_accessTest_4)
         ASSIGN_CLIENT_BADGE_CryptoServer(untitTest,
           cryptoServer_rpc, crypto_rpc, CRYPTOSERVER_ID_unitTest)
 
         cryptoServer.cryptoServer_config = {
             "clients": [
-                // Keys of client 0 can be loaded by client 0
+                // Keys of client 0 can be loaded by client 1
                 { "storageLimit": 1024*2,
-                  "allowedIds":   [0,-1,-1,-1,-1] },
-                // Keys of client 1 can be loaded by client 0, 1
+                  "allowedIds":   [1,0,0,0,0] },
+                // Keys of client 1 can be loaded by client 1, 2
                 { "storageLimit": 1024*2,
-                  "allowedIds":   [0,1,-1,-1,-1] },
-                // Keys of client 2 can be loaded by client 0, 1, 2
+                  "allowedIds":   [1,2,0,0,0] },
+                // Keys of client 2 can be loaded by client 1, 2, 3
                 { "storageLimit": 1024*2,
-                  "allowedIds":   [0,1,2,-1,-1] },
-                // Keys of client 3 can be loaded by client 0, 1, 2, 3
+                  "allowedIds":   [1,2,3,0,0] },
+                // Keys of client 3 can be loaded by client 1, 2, 3, 4
                 { "storageLimit": 1024*2,
-                  "allowedIds":   [0,1,2,3,-1] },
-                // Keys of client 4 (unit test) can be loaded only by client 4
+                  "allowedIds":   [1,2,3,4,0] },
+                // Keys of client 4 (unit test) can be loaded only by client 5
                 { "storageLimit": 1024*12,
-                   "allowedIds":  [4,-1,-1,-1,-1] },
+                   "allowedIds":  [5,0,0,0,0] },
             ]
         };
     }
