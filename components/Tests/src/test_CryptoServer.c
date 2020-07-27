@@ -243,5 +243,7 @@ int run()
         return -1;
     }
 
+    Debug_LOG_INFO("All tests successfully completed.");
+
     return 0;
 }
