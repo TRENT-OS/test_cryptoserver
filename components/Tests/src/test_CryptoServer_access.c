@@ -78,17 +78,17 @@ test_CryptoServer_access(
         seL4_Yield();
     }
 
-    // Check the configured access matrix, see main.cakes. We have configured
-    // all AccessTest instances such that they can access their own keys and the
-    // keys of all instances with a greater ID, i.e., ID=0 has most access.
+    // Check the configured list of allowed IDs, see main.cakes.
+    // We have configured all AccessTest instances such that they can access
+    // their own keys and the keys of all instances with a greater ID, i.e.,
+    // ID=1 has most access.
     for (id = 1; id <= NUM_INSTANCES; id++)
     {
         snprintf(name, sizeof(name), "KEY_%lu", (long unsigned int) id);
         if (id >= my_id)
         {
-            // We don't really need the key so get rid of it -- this is just to
-            // test that the matrix is correctly defined.
             TEST_SUCCESS(CryptoServer_loadKey(&hKey, hCrypto, id, name));
+            // We don't really need the key so get rid of it
             TEST_SUCCESS(OS_CryptoKey_free(hKey));
         }
         else
