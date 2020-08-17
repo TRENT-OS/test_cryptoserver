@@ -34,6 +34,7 @@ DeclareCAmkESComponent(
     LIBS
         os_core_api
         os_libs
+        os_crypto
         CryptoServer_client
 )
 
@@ -49,6 +50,7 @@ DeclareCAmkESComponent(
     LIBS
         os_core_api
         os_libs
+        os_crypto
         CryptoServer_client
 )
 
@@ -64,6 +66,7 @@ DeclareCAmkESComponent(
     LIBS
         os_core_api
         os_libs
+        os_crypto
         CryptoServer_client
 )
 
@@ -79,6 +82,7 @@ DeclareCAmkESComponent(
     LIBS
         os_core_api
         os_libs
+        os_crypto
         CryptoServer_client
 )
 
@@ -93,6 +97,7 @@ DeclareCAmkESComponent(
     LIBS
         os_core_api
         os_libs
+        os_crypto
         CryptoServer_client
 )
 

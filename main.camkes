@@ -35,25 +35,25 @@ assembly {
             CryptoServer, cryptoServer,
             entropySource.entropy_rpc, entropySource.entropy_port,
             ramDisk.storage_rpc, ramDisk.storage_port,
-            accessTest_1.crypto_rpc, accessTest_1.crypto_port, accessTest_1.cryptoServer_rpc,
-            accessTest_2.crypto_rpc, accessTest_2.crypto_port, accessTest_2.cryptoServer_rpc,
-            accessTest_3.crypto_rpc, accessTest_3.crypto_port, accessTest_3.cryptoServer_rpc,
-            accessTest_4.crypto_rpc, accessTest_4.crypto_port, accessTest_4.cryptoServer_rpc,
-            unitTest.crypto_rpc,     unitTest.crypto_port,     unitTest.cryptoServer_rpc)
+            accessTest_1.cryptoServer_rpc, accessTest_1.cryptoServer_port,
+            accessTest_2.cryptoServer_rpc, accessTest_2.cryptoServer_port,
+            accessTest_3.cryptoServer_rpc, accessTest_3.cryptoServer_port,
+            accessTest_4.cryptoServer_rpc, accessTest_4.cryptoServer_port,
+            unitTest.cryptoServer_rpc,     unitTest.cryptoServer_port)
     }
 
     configuration{
         // Assign client badge to both interfaces
         ASSIGN_CLIENT_BADGE_CryptoServer(accessTest_1,
-          cryptoServer_rpc, crypto_rpc, CRYPTOSERVER_ID_accessTest_1)
+          cryptoServer_rpc, CRYPTOSERVER_ID_accessTest_1)
         ASSIGN_CLIENT_BADGE_CryptoServer(accessTest_2,
-          cryptoServer_rpc, crypto_rpc, CRYPTOSERVER_ID_accessTest_2)
+          cryptoServer_rpc, CRYPTOSERVER_ID_accessTest_2)
         ASSIGN_CLIENT_BADGE_CryptoServer(accessTest_3,
-          cryptoServer_rpc, crypto_rpc, CRYPTOSERVER_ID_accessTest_3)
+          cryptoServer_rpc, CRYPTOSERVER_ID_accessTest_3)
         ASSIGN_CLIENT_BADGE_CryptoServer(accessTest_4,
-          cryptoServer_rpc, crypto_rpc, CRYPTOSERVER_ID_accessTest_4)
+          cryptoServer_rpc, CRYPTOSERVER_ID_accessTest_4)
         ASSIGN_CLIENT_BADGE_CryptoServer(untitTest,
-          cryptoServer_rpc, crypto_rpc, CRYPTOSERVER_ID_unitTest)
+          cryptoServer_rpc, CRYPTOSERVER_ID_unitTest)
 
         cryptoServer.cryptoServer_config = {
             "clients": [
