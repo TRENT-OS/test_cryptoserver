@@ -87,7 +87,6 @@ test_CryptoServer_loadKey_pos(
 {
     char keyName[] = "loadOk";
     OS_CryptoKey_Handle_t hKey;
-    OS_CryptoKey_Data_t expData;
 
     TEST_START();
 
@@ -98,11 +97,8 @@ test_CryptoServer_loadKey_pos(
 
     *bytesWritten += sizeof(aesData);
 
-    // Load key from RPC server storage into memory, migrate into local API
-    // instance and read it back
+    // Load key from RPC server storage back into memory
     TEST_SUCCESS(CryptoServer_loadKey(&hKey, hCrypto, CLIENT_ID, keyName));
-    TEST_SUCCESS(OS_CryptoKey_export(hKey, &expData));
-    Debug_ASSERT(!memcmp(&expData, &aesData, sizeof(OS_CryptoKey_Data_t)));
     TEST_SUCCESS(OS_CryptoKey_free(hKey));
 
     TEST_FINISH();
