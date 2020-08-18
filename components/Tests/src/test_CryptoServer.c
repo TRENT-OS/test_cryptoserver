@@ -73,7 +73,7 @@ test_CryptoServer_storeKey_neg(
     TEST_INVAL_PARAM(CryptoServer_storeKey(hKey, "fat-likes-only-8-chars"));
 
     // Invalid key object
-    TEST_INVAL_PARAM(CryptoServer_storeKey(NULL, "okName"));
+    TEST_INVAL_HANDLE(CryptoServer_storeKey(NULL, "okName"));
 
     TEST_SUCCESS(OS_CryptoKey_free(hKey));
 
@@ -125,10 +125,10 @@ test_CryptoServer_loadKey_neg(
     *bytesWritten += sizeof(aesData);
 
     // Empty key handle
-    TEST_INVAL_PARAM(CryptoServer_loadKey(NULL, hCrypto, CLIENT_ID, keyName));
+    TEST_INVAL_HANDLE(CryptoServer_loadKey(NULL, hCrypto, CLIENT_ID, keyName));
 
     // Empty crypto handle
-    TEST_INVAL_PARAM(CryptoServer_loadKey(&hKey, NULL, CLIENT_ID, keyName));
+    TEST_INVAL_HANDLE(CryptoServer_loadKey(&hKey, NULL, CLIENT_ID, keyName));
 
     // Load key from wrong client ID
     TEST_ACC_DENIED(CryptoServer_loadKey(&hKey, hCrypto, 1, keyName));
