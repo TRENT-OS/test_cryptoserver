@@ -21,7 +21,7 @@ static OS_Crypto_Config_t cfgClient =
 static OS_CryptoKey_Data_t rsaPrvData =
 {
     .type = OS_CryptoKey_TYPE_RSA_PRV,
-    .attribs.exportable = false,
+    .attribs.keepLocal = false,
     .data.rsa.prv = {
         .dBytes = {
             0x35, 0xe7, 0x4c, 0x80, 0x45, 0x9c, 0x4e, 0x69, 0x83, 0x2c, 0x62, 0xac, 0x26, 0x2d, 0x58, 0xac,

@@ -20,7 +20,7 @@ static OS_Crypto_Config_t cfgClient =
 static OS_CryptoKey_Data_t aesData =
 {
     .type = OS_CryptoKey_TYPE_AES,
-    .attribs.exportable = true,
+    .attribs.keepLocal = true,
     .data.aes = {
         .len   = 24,
         .bytes = {
