@@ -11,6 +11,8 @@
 #include <string.h>
 #include <sel4/sel4.h> // needed for seL4_yield()
 
+static const if_CryptoServer_t cryptoServer =
+    IF_CRYPTOSERVER_ASSIGN(cryptoServer_rpc);
 static OS_Crypto_Config_t cfgClient =
 {
     .mode = OS_Crypto_MODE_CLIENT_ONLY,
@@ -69,7 +71,7 @@ test_CryptoServer_access(
 
     // Import key into RPC server and store it, then free it
     TEST_SUCCESS(OS_CryptoKey_import(&hKey, hCrypto, &rsaPrvData));
-    TEST_SUCCESS(CryptoServer_storeKey(hKey, name));
+    TEST_SUCCESS(CryptoServer_storeKey(&cryptoServer, hKey, name));
     TEST_SUCCESS(OS_CryptoKey_free(hKey));
 
     // Wait for all instances to finish importing their keys (see above).
@@ -89,13 +91,13 @@ test_CryptoServer_access(
         snprintf(name, sizeof(name), "KEY_%lu", (long unsigned int) id);
         if (id >= my_id)
         {
-            TEST_SUCCESS(CryptoServer_loadKey(&hKey, hCrypto, id, name));
+            TEST_SUCCESS(CryptoServer_loadKey(&cryptoServer, &hKey, hCrypto, id, name));
             // We don't really need the key so get rid of it
             TEST_SUCCESS(OS_CryptoKey_free(hKey));
         }
         else
         {
-            TEST_ACC_DENIED(CryptoServer_loadKey(&hKey, hCrypto, id, name));
+            TEST_ACC_DENIED(CryptoServer_loadKey(&cryptoServer, &hKey, hCrypto, id, name));
         }
     }
 

@@ -10,6 +10,8 @@
 #include <camkes.h>
 #include <string.h>
 
+static const if_CryptoServer_t cryptoServer =
+    IF_CRYPTOSERVER_ASSIGN(cryptoServer_rpc);
 static OS_Crypto_Config_t cfgClient =
 {
     .mode = OS_Crypto_MODE_CLIENT_ONLY,
@@ -47,7 +49,7 @@ test_CryptoServer_storeKey_pos(
 
     // Import key into RPC server and store it, then free it
     TEST_SUCCESS(OS_CryptoKey_import(&hKey, hCrypto, &aesData));
-    TEST_SUCCESS(CryptoServer_storeKey(hKey, keyName));
+    TEST_SUCCESS(CryptoServer_storeKey(&cryptoServer, hKey, keyName));
     TEST_SUCCESS(OS_CryptoKey_free(hKey));
 
     *bytesWritten += sizeof(aesData);
@@ -67,13 +69,13 @@ test_CryptoServer_storeKey_neg(
     TEST_SUCCESS(OS_CryptoKey_import(&hKey, hCrypto, &aesData));
 
     // No name
-    TEST_INVAL_PARAM(CryptoServer_storeKey(hKey, ""));
+    TEST_INVAL_PARAM(CryptoServer_storeKey(&cryptoServer, hKey, ""));
 
     // Name too long
-    TEST_INVAL_PARAM(CryptoServer_storeKey(hKey, "fat-likes-only-8-chars"));
+    TEST_INVAL_PARAM(CryptoServer_storeKey(&cryptoServer, hKey, "fat-likes-only-8-chars"));
 
     // Invalid key object
-    TEST_INVAL_HANDLE(CryptoServer_storeKey(NULL, "okName"));
+    TEST_INVAL_HANDLE(CryptoServer_storeKey(&cryptoServer, NULL, "okName"));
 
     TEST_SUCCESS(OS_CryptoKey_free(hKey));
 
@@ -92,13 +94,13 @@ test_CryptoServer_loadKey_pos(
 
     // Import key into RPC server and store it, then free it
     TEST_SUCCESS(OS_CryptoKey_import(&hKey, hCrypto, &aesData));
-    TEST_SUCCESS(CryptoServer_storeKey(hKey, keyName));
+    TEST_SUCCESS(CryptoServer_storeKey(&cryptoServer, hKey, keyName));
     TEST_SUCCESS(OS_CryptoKey_free(hKey));
 
     *bytesWritten += sizeof(aesData);
 
     // Load key from RPC server storage back into memory
-    TEST_SUCCESS(CryptoServer_loadKey(&hKey, hCrypto, CLIENT_ID, keyName));
+    TEST_SUCCESS(CryptoServer_loadKey(&cryptoServer, &hKey, hCrypto, CLIENT_ID, keyName));
     TEST_SUCCESS(OS_CryptoKey_free(hKey));
 
     TEST_FINISH();
@@ -115,22 +117,22 @@ test_CryptoServer_loadKey_neg(
     TEST_START();
 
     TEST_SUCCESS(OS_CryptoKey_import(&hKey, hCrypto, &aesData));
-    TEST_SUCCESS(CryptoServer_storeKey(hKey, keyName));
+    TEST_SUCCESS(CryptoServer_storeKey(&cryptoServer, hKey, keyName));
     TEST_SUCCESS(OS_CryptoKey_free(hKey));
 
     *bytesWritten += sizeof(aesData);
 
     // Empty key handle
-    TEST_INVAL_HANDLE(CryptoServer_loadKey(NULL, hCrypto, CLIENT_ID, keyName));
+    TEST_INVAL_HANDLE(CryptoServer_loadKey(&cryptoServer, NULL, hCrypto, CLIENT_ID, keyName));
 
     // Empty crypto handle
-    TEST_INVAL_HANDLE(CryptoServer_loadKey(&hKey, NULL, CLIENT_ID, keyName));
+    TEST_INVAL_HANDLE(CryptoServer_loadKey(&cryptoServer, &hKey, NULL, CLIENT_ID, keyName));
 
     // Load key from wrong client ID
-    TEST_ACC_DENIED(CryptoServer_loadKey(&hKey, hCrypto, 1, keyName));
+    TEST_ACC_DENIED(CryptoServer_loadKey(&cryptoServer, &hKey, hCrypto, 1, keyName));
 
     // Load key with non-existent name
-    TEST_NOT_FOUND(CryptoServer_loadKey(&hKey, hCrypto, CLIENT_ID, "foo"));
+    TEST_NOT_FOUND(CryptoServer_loadKey(&cryptoServer, &hKey, hCrypto, CLIENT_ID, "foo"));
 
     TEST_FINISH();
 }
@@ -151,9 +153,9 @@ test_CryptoServer_useKey(
     TEST_START();
 
     TEST_SUCCESS(OS_CryptoKey_import(&hKey, hCrypto, &aesData));
-    TEST_SUCCESS(CryptoServer_storeKey(hKey, keyName));
+    TEST_SUCCESS(CryptoServer_storeKey(&cryptoServer, hKey, keyName));
     TEST_SUCCESS(OS_CryptoKey_free(hKey));
-    TEST_SUCCESS(CryptoServer_loadKey(&hKey, hCrypto, CLIENT_ID, keyName));
+    TEST_SUCCESS(CryptoServer_loadKey(&cryptoServer, &hKey, hCrypto, CLIENT_ID, keyName));
 
     *bytesWritten += sizeof(aesData);
 
@@ -194,12 +196,12 @@ test_CryptoServer_storageLimit(
         // Expect to receive an error
         if (bytesWritten > STORAGE_LIMIT)
         {
-            TEST_INSUFF_SPACE(CryptoServer_storeKey(hKey, keyName));
+            TEST_INSUFF_SPACE(CryptoServer_storeKey(&cryptoServer, hKey, keyName));
             keepWriting = false;
         }
         else
         {
-            TEST_SUCCESS(CryptoServer_storeKey(hKey, keyName));
+            TEST_SUCCESS(CryptoServer_storeKey(&cryptoServer, hKey, keyName));
         }
         TEST_SUCCESS(OS_CryptoKey_free(hKey));
     }
