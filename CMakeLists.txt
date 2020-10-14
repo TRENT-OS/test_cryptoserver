@@ -1,5 +1,5 @@
 #
-# Test Crypto Server
+# Test Crypto server
 #
 # Copyright (C) 2020, Hensoldt Cyber GmbH
 #
