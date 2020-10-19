@@ -16,7 +16,7 @@ static const if_CryptoServer_t cryptoServer =
 static OS_Crypto_Config_t cfgClient =
 {
     .mode = OS_Crypto_MODE_CLIENT_ONLY,
-    .crypto = IF_OS_CRYPTO_ASSIGN(
+    .rpc = IF_OS_CRYPTO_ASSIGN(
         cryptoServer_rpc,
         cryptoServer_port)
 };
