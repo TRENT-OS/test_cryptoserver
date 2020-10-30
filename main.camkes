@@ -9,8 +9,6 @@ import <if_OS_Entropy.camkes>;
 import "components/Tests/test_CryptoServer_access.camkes";
 import "components/Tests/test_CryptoServer.camkes";
 
-#include "system_config.h"
-
 #include "CryptoServer/camkes/CryptoServer.camkes"
 CryptoServer_COMPONENT_DECLARE(CryptoServer)
 
@@ -52,21 +50,14 @@ assembly {
     }
 
     configuration{
-        // Assign client badge to both interfaces
-        CryptoServer_CLIENT_ASSIGN_BADGE(
-          accessTest_1.cryptoServer_rpc, CRYPTOSERVER_ID_accessTest_1
-        )
-        CryptoServer_CLIENT_ASSIGN_BADGE(
-          accessTest_2.cryptoServer_rpc, CRYPTOSERVER_ID_accessTest_2
-        )
-        CryptoServer_CLIENT_ASSIGN_BADGE(
-          accessTest_3.cryptoServer_rpc, CRYPTOSERVER_ID_accessTest_3
-        )
-        CryptoServer_CLIENT_ASSIGN_BADGE(
-          accessTest_4.cryptoServer_rpc, CRYPTOSERVER_ID_accessTest_4
-        )
-        CryptoServer_CLIENT_ASSIGN_BADGE(
-          untitTest.cryptoServer_rpc, CRYPTOSERVER_ID_unitTest
+
+        // Assign client badges in same order as the clients are connected
+        CryptoServer_CLIENT_ASSIGN_BADGES(
+          accessTest_1.cryptoServer_rpc,
+          accessTest_2.cryptoServer_rpc,
+          accessTest_3.cryptoServer_rpc,
+          accessTest_4.cryptoServer_rpc,
+          unitTest.cryptoServer_rpc
         )
 
         cryptoServer.cryptoServer_config = {
