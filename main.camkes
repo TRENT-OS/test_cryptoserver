@@ -12,7 +12,7 @@ import "components/Tests/test_CryptoServer.camkes";
 #include "system_config.h"
 
 #include "CryptoServer/camkes/CryptoServer.camkes"
-DECLARE_COMPONENT_CryptoServer(CryptoServer)
+CryptoServer_COMPONENT_DECLARE(CryptoServer)
 
 #include "EntropySource/camkes/EntropySource.camkes"
 DECLARE_COMPONENT_EntropySource(EntropySource)
@@ -25,38 +25,49 @@ DECLARE_COMPONENT_RamDisk(RamDisk)
 
 assembly {
     composition {
+        // Set up components required by CryptoServer and connect
+        component CryptoServer  cryptoServer;
+        component RamDisk       ramDisk;
+        component EntropySource entropySource;
+
+        CryptoServer_INSTANCE_CONNECT(cryptoServer,
+            entropySource.entropy_rpc, entropySource.entropy_port,
+            ramDisk.storage_rpc,       ramDisk.storage_port
+        )
+
+        // Set up clients of CryptoServer and connect
         component   test_CryptoServer_access_1  accessTest_1;
         component   test_CryptoServer_access_2  accessTest_2;
         component   test_CryptoServer_access_3  accessTest_3;
         component   test_CryptoServer_access_4  accessTest_4;
         component   test_CryptoServer           unitTest;
 
-        component RamDisk ramDisk;
-        component EntropySource entropySource;
-
-        DECLARE_AND_CONNECT_INSTANCE_CryptoServer(
-            CryptoServer, cryptoServer,
-            entropySource.entropy_rpc, entropySource.entropy_port,
-            ramDisk.storage_rpc, ramDisk.storage_port,
+        CryptoServer_INSTANCE_CONNECT_CLIENTS(cryptoServer,
             accessTest_1.cryptoServer_rpc, accessTest_1.cryptoServer_port,
             accessTest_2.cryptoServer_rpc, accessTest_2.cryptoServer_port,
             accessTest_3.cryptoServer_rpc, accessTest_3.cryptoServer_port,
             accessTest_4.cryptoServer_rpc, accessTest_4.cryptoServer_port,
-            unitTest.cryptoServer_rpc,     unitTest.cryptoServer_port)
+            unitTest.cryptoServer_rpc,     unitTest.cryptoServer_port
+        )
     }
 
     configuration{
         // Assign client badge to both interfaces
-        ASSIGN_CLIENT_BADGE_CryptoServer(accessTest_1,
-          cryptoServer_rpc, CRYPTOSERVER_ID_accessTest_1)
-        ASSIGN_CLIENT_BADGE_CryptoServer(accessTest_2,
-          cryptoServer_rpc, CRYPTOSERVER_ID_accessTest_2)
-        ASSIGN_CLIENT_BADGE_CryptoServer(accessTest_3,
-          cryptoServer_rpc, CRYPTOSERVER_ID_accessTest_3)
-        ASSIGN_CLIENT_BADGE_CryptoServer(accessTest_4,
-          cryptoServer_rpc, CRYPTOSERVER_ID_accessTest_4)
-        ASSIGN_CLIENT_BADGE_CryptoServer(untitTest,
-          cryptoServer_rpc, CRYPTOSERVER_ID_unitTest)
+        CryptoServer_CLIENT_ASSIGN_BADGE(
+          accessTest_1.cryptoServer_rpc, CRYPTOSERVER_ID_accessTest_1
+        )
+        CryptoServer_CLIENT_ASSIGN_BADGE(
+          accessTest_2.cryptoServer_rpc, CRYPTOSERVER_ID_accessTest_2
+        )
+        CryptoServer_CLIENT_ASSIGN_BADGE(
+          accessTest_3.cryptoServer_rpc, CRYPTOSERVER_ID_accessTest_3
+        )
+        CryptoServer_CLIENT_ASSIGN_BADGE(
+          accessTest_4.cryptoServer_rpc, CRYPTOSERVER_ID_accessTest_4
+        )
+        CryptoServer_CLIENT_ASSIGN_BADGE(
+          untitTest.cryptoServer_rpc, CRYPTOSERVER_ID_unitTest
+        )
 
         cryptoServer.cryptoServer_config = {
             "clients": [
