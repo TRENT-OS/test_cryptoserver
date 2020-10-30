@@ -18,7 +18,7 @@ target_include_directories(${PROJECT_NAME} INTERFACE ${CMAKE_CURRENT_LIST_DIR})
 #-------------------------------------------------------------------------------
 project(test_cryptoserver C)
 
-DeclareCAmkESComponent_CryptoServer(
+CryptoServer_DeclareCAmkESComponent(
     CryptoServer
 )
 
