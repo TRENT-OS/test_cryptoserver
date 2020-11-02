@@ -101,7 +101,7 @@ DeclareCAmkESComponent(
         CryptoServer_client
 )
 
-DeclareCAmkESComponent_EntropySource(
+EntropySource_DeclareCAmkESComponent(
     EntropySource
 )
 
