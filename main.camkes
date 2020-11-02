@@ -13,7 +13,7 @@ import "components/Tests/test_CryptoServer.camkes";
 CryptoServer_COMPONENT_DECLARE(CryptoServer)
 
 #include "EntropySource/camkes/EntropySource.camkes"
-DECLARE_COMPONENT_EntropySource(EntropySource)
+EntropySource_COMPONENT_DECLARE(EntropySource)
 
 #include "RamDisk/RamDisk.camkes"
 RamDisk_COMPONENT_DECLARE(RamDisk)
