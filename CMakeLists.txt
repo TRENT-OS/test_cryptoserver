@@ -105,7 +105,7 @@ DeclareCAmkESComponent_EntropySource(
     EntropySource
 )
 
-DeclareCAmkESComponent_RamDisk(
+RamDisk_DeclareCAmkESComponent(
     RamDisk
     system_config
 )
