@@ -16,7 +16,7 @@ CryptoServer_COMPONENT_DECLARE(CryptoServer)
 DECLARE_COMPONENT_EntropySource(EntropySource)
 
 #include "RamDisk/RamDisk.camkes"
-DECLARE_COMPONENT_RamDisk(RamDisk)
+RamDisk_COMPONENT_DECLARE(RamDisk)
 
 // 8 handles are sufficient
 #define CLIENT_HANDLE_MGR_CAPACITY 8
