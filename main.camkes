@@ -10,13 +10,13 @@ import "components/Tests/test_CryptoServer_access.camkes";
 import "components/Tests/test_CryptoServer.camkes";
 
 #include "CryptoServer/camkes/CryptoServer.camkes"
-CryptoServer_COMPONENT_DECLARE(CryptoServer)
+CryptoServer_COMPONENT_DEFINE(CryptoServer)
 
 #include "EntropySource/camkes/EntropySource.camkes"
-EntropySource_COMPONENT_DECLARE(EntropySource)
+EntropySource_COMPONENT_DEFINE(EntropySource)
 
 #include "RamDisk/RamDisk.camkes"
-RamDisk_COMPONENT_DECLARE(RamDisk)
+RamDisk_COMPONENT_DEFINE(RamDisk)
 
 // 8 handles are sufficient
 #define CLIENT_HANDLE_MGR_CAPACITY 8
