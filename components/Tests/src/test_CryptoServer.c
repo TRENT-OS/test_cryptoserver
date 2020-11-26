@@ -129,7 +129,7 @@ test_CryptoServer_loadKey_neg(
     TEST_INVAL_HANDLE(CryptoServer_loadKey(&cryptoServer, &hKey, NULL, CLIENT_ID, keyName));
 
     // Load key from wrong client ID
-    TEST_ACC_DENIED(CryptoServer_loadKey(&cryptoServer, &hKey, hCrypto, 1, keyName));
+    TEST_ACC_DENIED(CryptoServer_loadKey(&cryptoServer, &hKey, hCrypto, 101, keyName));
 
     // Load key with non-existent name
     TEST_NOT_FOUND(CryptoServer_loadKey(&cryptoServer, &hKey, hCrypto, CLIENT_ID, "foo"));

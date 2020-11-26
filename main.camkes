@@ -64,23 +64,23 @@ assembly {
             "clients": [
                 // Keys of client 0 can be loaded by client 1
                 { "storageLimit": 1024*2,
-                  "allowedIds":   [1,0,0,0,0],
+                  "allowedIds":   [101,0,0,0,0],
                   "handleMgrCapacity": CLIENT_HANDLE_MGR_CAPACITY },
                 // Keys of client 1 can be loaded by client 1, 2
                 { "storageLimit": 1024*2,
-                  "allowedIds":   [1,2,0,0,0],
+                  "allowedIds":   [101,102,0,0,0],
                   "handleMgrCapacity": CLIENT_HANDLE_MGR_CAPACITY },
                 // Keys of client 2 can be loaded by client 1, 2, 3
                 { "storageLimit": 1024*2,
-                  "allowedIds":   [1,2,3,0,0],
+                  "allowedIds":   [101,102,103,0,0],
                   "handleMgrCapacity": CLIENT_HANDLE_MGR_CAPACITY },
                 // Keys of client 3 can be loaded by client 1, 2, 3, 4
                 { "storageLimit": 1024*2,
-                  "allowedIds":   [1,2,3,4,0],
+                  "allowedIds":   [101,102,103,104,0],
                    "handleMgrCapacity": CLIENT_HANDLE_MGR_CAPACITY },
                 // Keys of client 4 (unit test) can be loaded only by client 5
                 { "storageLimit": 1024*12,
-                   "allowedIds":  [5,0,0,0,0],
+                   "allowedIds":  [105,0,0,0,0],
                    "handleMgrCapacity": CLIENT_HANDLE_MGR_CAPACITY },
             ]
         };

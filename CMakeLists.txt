@@ -29,7 +29,7 @@ DeclareCAmkESComponent(
     C_FLAGS
         -Wall
         -Werror
-        -DCLIENT_ID=1
+        -DCLIENT_ID=101
         -DNUM_INSTANCES=4
     LIBS
         os_core_api
@@ -45,7 +45,7 @@ DeclareCAmkESComponent(
     C_FLAGS
         -Wall
         -Werror
-        -DCLIENT_ID=2
+        -DCLIENT_ID=102
         -DNUM_INSTANCES=4
     LIBS
         os_core_api
@@ -61,7 +61,7 @@ DeclareCAmkESComponent(
     C_FLAGS
         -Wall
         -Werror
-        -DCLIENT_ID=3
+        -DCLIENT_ID=103
         -DNUM_INSTANCES=4
     LIBS
         os_core_api
@@ -77,7 +77,7 @@ DeclareCAmkESComponent(
     C_FLAGS
         -Wall
         -Werror
-        -DCLIENT_ID=4
+        -DCLIENT_ID=104
         -DNUM_INSTANCES=4
     LIBS
         os_core_api
@@ -93,7 +93,7 @@ DeclareCAmkESComponent(
     C_FLAGS
         -Wall
         -Werror
-        -DCLIENT_ID=5
+        -DCLIENT_ID=105
     LIBS
         os_core_api
         os_libs
