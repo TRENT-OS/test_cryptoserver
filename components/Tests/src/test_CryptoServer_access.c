@@ -5,7 +5,7 @@
 #include "OS_Crypto.h"
 #include "CryptoServer.h"
 
-#include "TestMacros.h"
+#include "LibMacros/Test.h"
 
 #include <camkes.h>
 #include <string.h>
