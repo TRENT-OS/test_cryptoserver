@@ -33,7 +33,7 @@ DeclareCAmkESComponent(
         -DNUM_INSTANCES=4
     LIBS
         os_core_api
-        os_libs
+        lib_debug
         os_crypto
         CryptoServer_client
 )
@@ -49,7 +49,7 @@ DeclareCAmkESComponent(
         -DNUM_INSTANCES=4
     LIBS
         os_core_api
-        os_libs
+        lib_debug
         os_crypto
         CryptoServer_client
 )
@@ -65,7 +65,7 @@ DeclareCAmkESComponent(
         -DNUM_INSTANCES=4
     LIBS
         os_core_api
-        os_libs
+        lib_debug
         os_crypto
         CryptoServer_client
 )
@@ -81,7 +81,7 @@ DeclareCAmkESComponent(
         -DNUM_INSTANCES=4
     LIBS
         os_core_api
-        os_libs
+        lib_debug
         os_crypto
         CryptoServer_client
 )
@@ -96,7 +96,7 @@ DeclareCAmkESComponent(
         -DCLIENT_ID=105
     LIBS
         os_core_api
-        os_libs
+        lib_debug
         os_crypto
         CryptoServer_client
 )
