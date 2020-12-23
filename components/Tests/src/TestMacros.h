@@ -56,7 +56,7 @@ static char testName[MAX_MSG_LEN] = "<undefined>";
  */
 
 // Assert to check for a specific error code
-// Checking return value of snprintf to stop GCC from throwing error about 
+// Checking return value of snprintf to stop GCC from throwing error about
 // format truncation.
 #define ASSERT_ERR(x, err) {                                                        \
     char msg[MAX_MSG_LEN];                                                          \
@@ -90,7 +90,7 @@ static char testName[MAX_MSG_LEN] = "<undefined>";
 #define TEST_SUCCESS(fn) \
     ASSERT_ERR(fn, OS_SUCCESS)
 // Check boolean expression and not an error code
-// Checking return value of snprintf to stop GCC from throwing error about 
+// Checking return value of snprintf to stop GCC from throwing error about
 // format truncation.
 #define TEST_TRUE(st) {                                                      \
     char msg[MAX_MSG_LEN];                                                   \
