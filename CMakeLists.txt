@@ -34,6 +34,7 @@ DeclareCAmkESComponent(
     LIBS
         os_core_api
         lib_debug
+        lib_macros
         os_crypto
         CryptoServer_client
 )
@@ -50,6 +51,7 @@ DeclareCAmkESComponent(
     LIBS
         os_core_api
         lib_debug
+        lib_macros
         os_crypto
         CryptoServer_client
 )
@@ -66,6 +68,7 @@ DeclareCAmkESComponent(
     LIBS
         os_core_api
         lib_debug
+        lib_macros
         os_crypto
         CryptoServer_client
 )
@@ -82,6 +85,7 @@ DeclareCAmkESComponent(
     LIBS
         os_core_api
         lib_debug
+        lib_macros
         os_crypto
         CryptoServer_client
 )
@@ -97,6 +101,7 @@ DeclareCAmkESComponent(
     LIBS
         os_core_api
         lib_debug
+        lib_macros
         os_crypto
         CryptoServer_client
 )
