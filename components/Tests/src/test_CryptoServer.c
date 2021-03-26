@@ -5,6 +5,7 @@
 #include "OS_Crypto.h"
 #include "CryptoServer.h"
 
+#include "lib_compiler/compiler.h"
 #include "lib_macros/Test.h"
 
 #include <camkes.h>
@@ -165,7 +166,10 @@ test_CryptoServer_useKey(
                                       NULL, 0));
     TEST_SUCCESS(OS_CryptoCipher_process(hCipher, buf, ptLen, buf, &ctLen));
     Debug_ASSERT(ctLen == ptLen);
-    Debug_ASSERT(!memcmp(buf, ct, ptLen));
+
+    DECL_UNUSED_VAR(const bool isEncryptedEqualCipherText) =
+        (0 == memcmp(buf, ct, ptLen));
+    Debug_ASSERT(isEncryptedEqualCipherText);
     TEST_SUCCESS(OS_CryptoCipher_free(hCipher));
 
     TEST_SUCCESS(OS_CryptoKey_free(hKey));

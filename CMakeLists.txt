@@ -100,6 +100,7 @@ DeclareCAmkESComponent(
         -DCLIENT_ID=105
     LIBS
         os_core_api
+        lib_compiler
         lib_debug
         lib_macros
         os_crypto
