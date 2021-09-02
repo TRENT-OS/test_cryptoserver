@@ -65,7 +65,7 @@ test_CryptoServer_access(
     char name[16];
     seL4_Word id, my_id = CLIENT_ID;
 
-    TEST_START("i", my_id);
+    TEST_START(SEL4_PRI_word, my_id);
 
     snprintf(name, sizeof(name), "KEY_%lu", (long unsigned int) my_id);
 
