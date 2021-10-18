@@ -113,7 +113,6 @@ EntropySource_DeclareCAmkESComponent(
 
 RamDisk_DeclareCAmkESComponent(
     RamDisk
-    system_config
 )
 
 DeclareAndCreateCamkESSystem(main.camkes)

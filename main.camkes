@@ -84,5 +84,7 @@ assembly {
                    "handleMgrCapacity": CLIENT_HANDLE_MGR_CAPACITY },
             ]
         };
+
+        ramDisk.storage_size = (1 * 1024 * 1024);
     }
 }
